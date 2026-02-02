@@ -10,8 +10,8 @@ export default function Mission() {
           {/* Левая часть: Эмоциональный текст (Боли и Философия) */}
           <div>
             
-            <h2 className="text-4xl lg:text-2xl font-coolvetica text-[#0f172a] mb-8 leading-[1.15]">
-              Мы делаем сервис для тех, кто лечит, а не внедряет IT.
+            <h2 className="text-4xl lg:text-4xl font-coolvetica text-[#0f172a] mb-8 leading-[1.15]">
+              Мы сделали сервис для тех, кто лечит, а не внедряет IT.
             </h2>
 
             <div className="space-y-6 text-xl text-slate-600 font-navigo leading-relaxed">
@@ -28,7 +28,7 @@ export default function Mission() {
               </p>
 
               <p className="font-medium text-slate-900 border-l-4 border-primary pl-4">
-                Наша цель — дать инструмент, который подойдет 90% небольших клиник. 
+                Наша миссия — дать финансовый инструмент, который подойдет 95% клиник. 
                 Без лишних кнопок. Без оплаты за внедрение. Без головной боли.
               </p>
             </div>
