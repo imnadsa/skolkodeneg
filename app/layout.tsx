@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { daysOne, navigo } from "./fonts";
+import { coolvetica, daysOne, navigo } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Сколько Денег — Финансовый учет для медицинских клиник",
-  description: "Простая система учета финансов для вашей клиники. Контролируйте прибыль без тетрадок и головной боли.",
+  description: "Простая система учета финансов для вашей клиники.",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru" className={`${daysOne.variable} ${navigo.variable}`}>
+    <html lang="ru" className={`${coolvetica.variable} ${daysOne.variable} ${navigo.variable}`}>
       <body className="antialiased">
         {children}
       </body>
