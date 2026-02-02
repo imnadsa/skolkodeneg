@@ -20,6 +20,7 @@ const config: Config = {
         },
       },
       fontFamily: {
+        coolvetica: ["var(--font-coolvetica)"],
         "days-one": ["var(--font-days-one)"],
         navigo: ["var(--font-navigo)"],
       },
