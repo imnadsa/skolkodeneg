@@ -1,6 +1,6 @@
 'use client'
 
-import { Wallet, CreditCard, TrendingUp } from 'lucide-react'
+import { IconWallet, IconCreditCard, IconTrendingUp } from '@tabler/icons-react'
 import Card from '@/components/ui/Card'
 import { formatMoney } from '@/lib/utils'
 import { usePlayground } from '@/lib/playground-store'
@@ -12,19 +12,19 @@ export default function BalanceCards() {
     {
       title: 'Всего средств',
       amount: stats.totalBalance,
-      icon: Wallet,
+      Icon: IconWallet,
       gradient: true
     },
     {
       title: 'Наличные',
       amount: stats.cashBalance,
-      icon: Wallet,
+      Icon: IconWallet,
       gradient: false
     },
     {
       title: 'Банковский счёт',
       amount: stats.cardBalance,
-      icon: CreditCard,
+      Icon: IconCreditCard,
       gradient: false
     }
   ]
@@ -32,7 +32,7 @@ export default function BalanceCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {cards.map((card, index) => {
-        const Icon = card.icon
+        const { Icon } = card
         
         return (
           <Card
@@ -50,7 +50,7 @@ export default function BalanceCards() {
                   {card.title}
                 </p>
                 <div className={`p-2 rounded-xl ${card.gradient ? 'bg-white/20' : 'bg-primary/10'}`}>
-                  <Icon className={`w-5 h-5 ${card.gradient ? 'text-white' : 'text-primary'}`} />
+                  <Icon size={20} className={card.gradient ? 'text-white' : 'text-primary'} stroke={2} />
                 </div>
               </div>
               
@@ -60,7 +60,7 @@ export default function BalanceCards() {
               
               {card.gradient && (
                 <div className="mt-4 flex items-center gap-2 text-white/90">
-                  <TrendingUp className="w-4 h-4" />
+                  <IconTrendingUp size={16} stroke={2} />
                   <span className="text-sm font-navigo">Чистая прибыль: {formatMoney(stats.netProfit)}</span>
                 </div>
               )}
