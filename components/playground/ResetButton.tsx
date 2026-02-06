@@ -1,6 +1,6 @@
 'use client'
 
-import { RotateCcw } from 'lucide-react'
+import { IconRefresh } from '@tabler/icons-react'
 import Button from '@/components/ui/Button'
 import { usePlayground } from '@/lib/playground-store'
 
@@ -20,7 +20,7 @@ export default function ResetButton() {
       onClick={handleReset}
       className="gap-2"
     >
-      <RotateCcw className="w-4 h-4" />
+      <IconRefresh size={16} stroke={2} />
       Сбросить к примеру
     </Button>
   )
