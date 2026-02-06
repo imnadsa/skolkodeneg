@@ -4,19 +4,19 @@ export const INCOME_CATEGORIES: Category[] = [
   {
     name: 'Оплата пациентов',
     aliases: ['оплата', 'выручка', 'доход', 'пациент', 'пациенты'],
-    emoji: '💰',
+    emoji: 'IconCoin', // Tabler icon name
     type: 'income'
   },
   {
     name: 'Продажа товаров',
     aliases: ['товары', 'товар', 'продажа'],
-    emoji: '🛍️',
+    emoji: 'IconShoppingCart',
     type: 'income'
   },
   {
     name: 'Прочие доходы',
     aliases: ['прочее', 'другое'],
-    emoji: '💵',
+    emoji: 'IconCash',
     type: 'income'
   }
 ]
@@ -25,49 +25,49 @@ export const EXPENSE_CATEGORIES: Category[] = [
   {
     name: 'ЗП',
     aliases: ['зп', 'зарплата', 'заработная'],
-    emoji: '💼',
+    emoji: 'IconBriefcase',
     type: 'expense'
   },
   {
     name: 'ЗТЛ',
     aliases: ['зтл', 'лаборатория', 'зуботехническая'],
-    emoji: '🦷',
+    emoji: 'IconDental',
     type: 'expense'
   },
   {
     name: 'Маркетинг',
     aliases: ['маркетинг', 'реклама', 'продвижение', 'таргет'],
-    emoji: '📢',
+    emoji: 'IconSpeakerphone',
     type: 'expense'
   },
   {
     name: 'Налоги',
     aliases: ['налоги', 'налог'],
-    emoji: '🏛️',
+    emoji: 'IconBuildingBank',
     type: 'expense'
   },
   {
     name: 'Коммунальные платежи',
     aliases: ['коммуналка', 'коммунальные', 'аренда'],
-    emoji: '🏠',
+    emoji: 'IconHome',
     type: 'expense'
   },
   {
     name: 'Эквайринг',
     aliases: ['эквайринг', 'комиссия'],
-    emoji: '💳',
+    emoji: 'IconCreditCard',
     type: 'expense'
   },
   {
     name: 'Расходники',
     aliases: ['расходники', 'материалы', 'медикаменты'],
-    emoji: '💊',
+    emoji: 'IconPill',
     type: 'expense'
   },
   {
     name: 'Прочие расходы',
     aliases: ['прочее', 'другое'],
-    emoji: '📦',
+    emoji: 'IconPackage',
     type: 'expense'
   }
 ]
