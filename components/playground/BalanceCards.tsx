@@ -19,12 +19,14 @@ export default function BalanceCards() {
       title: 'Наличные',
       amount: stats.cashBalance,
       Icon: IconWallet,
+      iconColor: '#FF4DA6', // розовый светлый
       gradient: false
     },
     {
       title: 'Банковский счёт',
       amount: stats.cardBalance,
       Icon: IconCreditCard,
+      iconColor: '#00D9A3', // зелёный
       gradient: false
     }
   ]
@@ -38,23 +40,22 @@ export default function BalanceCards() {
           <Card
             key={index}
             variant={card.gradient ? 'gradient' : 'default'}
-            className={card.gradient ? 'relative overflow-hidden' : ''}
           >
-            {card.gradient && (
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
-            )}
-            
             <div className="relative">
               <div className="flex items-center justify-between mb-4">
-                <p className={`text-sm font-navigo ${card.gradient ? 'text-white/80' : 'text-gray-600'}`}>
+                <p className={`text-sm font-navigo ${card.gradient ? 'text-white/80' : 'text-text-secondary'}`}>
                   {card.title}
                 </p>
-                <div className={`p-2 rounded-xl ${card.gradient ? 'bg-white/20' : 'bg-primary/10'}`}>
-                  <Icon size={20} className={card.gradient ? 'text-white' : 'text-primary'} stroke={2} />
-                </div>
+                {/* Иконка БЕЗ фона - просто цветная */}
+                <Icon 
+                  size={24} 
+                  className={card.gradient ? 'text-white' : ''} 
+                  stroke={2}
+                  style={!card.gradient && card.iconColor ? { color: card.iconColor } : {}}
+                />
               </div>
               
-              <p className={`text-3xl font-coolvetica ${card.gradient ? 'text-white' : 'text-slate-900'}`}>
+              <p className={`text-3xl font-coolvetica ${card.gradient ? 'text-white' : 'text-text-primary'}`}>
                 {formatMoney(card.amount)}
               </p>
               
@@ -71,3 +72,4 @@ export default function BalanceCards() {
     </div>
   )
 }
+
