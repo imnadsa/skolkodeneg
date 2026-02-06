@@ -13,35 +13,31 @@ export default function StatsCards() {
       label: 'Выручка',
       value: stats.totalIncome,
       Icon: IconTrendingUp,
-      color: 'text-green-600',
-      bgColor: 'bg-green-100'
+      color: '#00D9A3', // зелёный
     },
     {
       label: 'Расходы',
       value: stats.totalExpenses,
       Icon: IconTrendingDown,
-      color: 'text-red-600',
-      bgColor: 'bg-red-100'
+      color: '#FF4DA6', // розовый светлый
     },
     {
       label: 'Чистая прибыль',
       value: stats.netProfit,
       Icon: IconCurrencyDollar,
-      color: 'text-blue-600',
-      bgColor: 'bg-blue-100'
+      color: '#00D9A3', // зелёный
     },
     {
       label: 'Средняя прибыль/день',
       value: stats.avgDailyProfit,
       Icon: IconCurrencyDollar,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100'
+      color: '#FF0084', // розовый основной
     }
   ]
 
   return (
     <Card>
-      <h3 className="text-lg font-coolvetica text-slate-900 mb-4">Финансовые показатели</h3>
+      <h3 className="text-lg font-coolvetica text-text-primary mb-4">Финансовые показатели</h3>
       
       <div className="grid grid-cols-2 gap-4">
         {items.map((item, index) => {
@@ -49,12 +45,11 @@ export default function StatsCards() {
           
           return (
             <div key={index} className="flex items-start gap-3">
-              <div className={`p-2 rounded-lg ${item.bgColor}`}>
-                <Icon size={20} className={item.color} stroke={2} />
-              </div>
+              {/* Иконка БЕЗ фона - просто цветная */}
+              <Icon size={24} style={{ color: item.color }} stroke={2} />
               <div>
-                <p className="text-xs text-gray-600 font-navigo">{item.label}</p>
-                <p className="text-xl font-coolvetica text-slate-900">{formatMoney(item.value)}</p>
+                <p className="text-xs text-text-secondary font-navigo">{item.label}</p>
+                <p className="text-xl font-coolvetica text-text-primary">{formatMoney(item.value)}</p>
               </div>
             </div>
           )
