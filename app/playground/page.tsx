@@ -13,16 +13,16 @@ export default function PlaygroundPage() {
         
         {/* Заголовок */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4 border border-primary/20">
             <IconSparkles size={16} stroke={2} />
             <span className="text-sm font-navigo font-medium">Интерактивная демо</span>
           </div>
           
-          <h1 className="text-4xl lg:text-5xl font-coolvetica text-slate-900 mb-4">
+          <h1 className="text-4xl lg:text-5xl font-coolvetica text-text-primary mb-4">
             Попробуйте прямо сейчас
           </h1>
           
-          <p className="text-lg text-gray-600 font-navigo max-w-2xl mx-auto">
+          <p className="text-lg text-text-secondary font-navigo max-w-2xl mx-auto">
             Добавьте транзакцию через «Telegram-бот» и посмотрите как она отобразится в дашборде.
             Все данные хранятся локально в вашем браузере.
           </p>
@@ -34,10 +34,10 @@ export default function PlaygroundPage() {
           {/* Левая колонка: Telegram */}
           <div>
             <div className="mb-4">
-              <h2 className="text-2xl font-coolvetica text-slate-900 mb-2">
+              <h2 className="text-2xl font-coolvetica text-text-primary mb-2">
                 1️⃣ Добавьте транзакцию
               </h2>
-              <p className="text-gray-600 font-navigo">
+              <p className="text-text-secondary font-navigo">
                 Напишите команду в формате: <span className="font-mono text-primary">сумма категория счёт</span>
               </p>
             </div>
@@ -47,10 +47,10 @@ export default function PlaygroundPage() {
           {/* Правая колонка: Дашборд */}
           <div className="space-y-6">
             <div className="mb-4">
-              <h2 className="text-2xl font-coolvetica text-slate-900 mb-2">
+              <h2 className="text-2xl font-coolvetica text-text-primary mb-2">
                 2️⃣ Смотрите результат
               </h2>
-              <p className="text-gray-600 font-navigo">
+              <p className="text-text-secondary font-navigo">
                 Данные автоматически попадают в дашборд с аналитикой
               </p>
             </div>
@@ -76,7 +76,7 @@ export default function PlaygroundPage() {
         </div>
 
         {/* Призыв к действию */}
-        <div className="mt-16 text-center bg-gradient-to-br from-primary to-primary-light rounded-3xl p-12 text-white">
+        <div className="mt-16 text-center bg-gradient-to-br from-primary to-primary-light rounded-3xl p-12 text-white shadow-glow-pink-lg">
           <h2 className="text-3xl font-coolvetica mb-4">
             Понравилось? Внедрите в свою клинику!
           </h2>
