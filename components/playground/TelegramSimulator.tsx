@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Send, Bot } from 'lucide-react'
+import { Send } from 'lucide-react'
+import Image from 'next/image'
 import { usePlayground } from '@/lib/playground-store'
 import { parseTransaction, isCategoriesCommand, isHelpCommand } from '@/lib/transaction-parser'
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '@/lib/categories'
@@ -28,10 +29,12 @@ export default function TelegramSimulator() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const addTransaction = usePlayground((s) => s.addTransaction)
 
-  // Автоскролл при новых сообщениях
+  // Автоскролл только при первой загрузке
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+    if (messages.length === 1) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'auto' })
+    }
+  }, [])
 
   const addMessage = (text: string, sender: 'user' | 'bot') => {
     const newMessage: Message = {
@@ -97,8 +100,14 @@ export default function TelegramSimulator() {
     <Card className="flex flex-col h-[600px]">
       {/* Шапка чата */}
       <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-        <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-light rounded-full flex items-center justify-center">
-          <Bot className="w-6 h-6 text-white" />
+        <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-white border-2 border-primary/20">
+          <Image
+            src="/logo-12.png"
+            alt="Сколько Денег"
+            width={48}
+            height={48}
+            className="w-full h-full object-cover"
+          />
         </div>
         <div>
           <p className="font-semibold text-lg font-coolvetica">Сколько Денег</p>
