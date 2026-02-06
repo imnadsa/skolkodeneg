@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Send } from 'lucide-react'
+import { IconSend } from '@tabler/icons-react'
 import Image from 'next/image'
 import { usePlayground } from '@/lib/playground-store'
 import { parseTransaction, isCategoriesCommand, isHelpCommand } from '@/lib/transaction-parser'
@@ -102,7 +102,7 @@ export default function TelegramSimulator() {
       <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
         <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-white border-2 border-primary/20">
           <Image
-            src="/logo-12.png"
+            src="/logo.png"
             alt="Сколько Денег"
             width={48}
             height={48}
@@ -159,7 +159,7 @@ export default function TelegramSimulator() {
             size="md"
             className="rounded-full w-12 h-12 p-0"
           >
-            <Send className="w-5 h-5" />
+            <IconSend size={20} stroke={2} />
           </Button>
         </div>
         <p className="text-xs text-gray-500 mt-2 text-center">
