@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { usePlayground } from '@/lib/playground-store'
 import { parseTransaction, isCategoriesCommand, isHelpCommand } from '@/lib/transaction-parser'
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '@/lib/categories'
-import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
 interface Message {
@@ -153,14 +152,13 @@ export default function TelegramSimulator() {
             placeholder="5000 зп нал..."
             className="flex-1 px-4 py-3 bg-surface-light border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-navigo text-text-primary placeholder:text-text-tertiary"
           />
-          <Button
+          <button
             onClick={handleSend}
             disabled={!input.trim()}
-            size="md"
-            className="rounded-full w-12 h-12 p-0 flex items-center justify-center"
+            className="w-12 h-12 rounded-full bg-primary hover:bg-primary-light disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all shadow-glow-pink active:scale-95"
           >
-            <IconSend size={20} stroke={2} />
-          </Button>
+            <IconSend size={20} stroke={2} className="text-white" />
+          </button>
         </div>
         <p className="text-xs text-text-tertiary mt-2 text-center">
           Формат: <span className="font-mono text-primary">сумма категория счёт примечание</span>
