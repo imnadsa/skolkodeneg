@@ -1,6 +1,6 @@
 'use client'
 
-import { Trash2, FileSpreadsheet } from 'lucide-react'
+import { IconTrash, IconTable } from '@tabler/icons-react'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import { usePlayground } from '@/lib/playground-store'
@@ -19,7 +19,7 @@ export default function TransactionsTable() {
     <Card>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <FileSpreadsheet className="w-5 h-5 text-green-600" />
+          <IconTable size={20} className="text-green-600" stroke={2} />
           <h3 className="text-lg font-coolvetica text-slate-900">Google Таблица</h3>
         </div>
         <p className="text-sm text-gray-500">Последние 10 транзакций</p>
@@ -67,7 +67,7 @@ export default function TransactionsTable() {
                     className="p-2 hover:bg-red-50 rounded-lg transition-colors group"
                     title="Удалить"
                   >
-                    <Trash2 className="w-4 h-4 text-gray-400 group-hover:text-red-600" />
+                    <IconTrash size={16} className="text-gray-400 group-hover:text-red-600" stroke={2} />
                   </button>
                 </td>
               </tr>
