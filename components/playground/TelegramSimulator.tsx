@@ -99,10 +99,10 @@ export default function TelegramSimulator() {
   return (
     <Card className="flex flex-col h-[600px]">
       {/* Шапка чата */}
-      <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
-        <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-white border-2 border-primary/20">
+      <div className="flex items-center gap-3 pb-4 border-b border-border">
+        <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-surface-light border-2 border-primary/30">
           <Image
-            src="/logo-12.png"
+            src="/logo.png"
             alt="Сколько Денег"
             width={48}
             height={48}
@@ -110,9 +110,9 @@ export default function TelegramSimulator() {
           />
         </div>
         <div>
-          <p className="font-semibold text-lg font-coolvetica">Сколько Денег</p>
-          <p className="text-xs text-green-500 flex items-center gap-1">
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <p className="font-semibold text-lg font-coolvetica text-text-primary">Сколько Денег</p>
+          <p className="text-xs text-success flex items-center gap-1">
+            <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
             онлайн
           </p>
         </div>
@@ -128,12 +128,12 @@ export default function TelegramSimulator() {
             <div
               className={`max-w-[80%] px-4 py-3 rounded-2xl whitespace-pre-line ${
                 msg.sender === 'user'
-                  ? 'bg-primary text-white rounded-br-sm'
-                  : 'bg-gray-100 text-gray-900 rounded-bl-sm'
+                  ? 'bg-primary text-white rounded-br-sm shadow-glow-pink'
+                  : 'bg-surface-light text-text-primary rounded-bl-sm'
               }`}
             >
               <p className="text-sm font-navigo">{msg.text}</p>
-              <p className={`text-[10px] mt-1 ${msg.sender === 'user' ? 'text-white/70' : 'text-gray-500'}`}>
+              <p className={`text-[10px] mt-1 ${msg.sender === 'user' ? 'text-white/70' : 'text-text-tertiary'}`}>
                 {msg.timestamp.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
               </p>
             </div>
@@ -143,7 +143,7 @@ export default function TelegramSimulator() {
       </div>
 
       {/* Инпут */}
-      <div className="pt-4 border-t border-gray-100">
+      <div className="pt-4 border-t border-border">
         <div className="flex gap-2">
           <input
             type="text"
@@ -151,19 +151,19 @@ export default function TelegramSimulator() {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="5000 зп нал..."
-            className="flex-1 px-4 py-3 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-navigo"
+            className="flex-1 px-4 py-3 bg-surface-light border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-navigo text-text-primary placeholder:text-text-tertiary"
           />
           <Button
             onClick={handleSend}
             disabled={!input.trim()}
             size="md"
-            className="rounded-full w-12 h-12 p-0"
+            className="rounded-full w-12 h-12 p-0 flex items-center justify-center"
           >
             <IconSend size={20} stroke={2} />
           </Button>
         </div>
-        <p className="text-xs text-gray-500 mt-2 text-center">
-          Формат: <span className="font-mono">сумма категория счёт примечание</span>
+        <p className="text-xs text-text-tertiary mt-2 text-center">
+          Формат: <span className="font-mono text-primary">сумма категория счёт примечание</span>
         </p>
       </div>
     </Card>
