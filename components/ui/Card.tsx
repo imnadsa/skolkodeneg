@@ -8,15 +8,15 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'default', children, ...props }, ref) => {
     const variants = {
-      default: 'bg-white border border-gray-100',
-      gradient: 'bg-gradient-to-br from-primary to-primary-light text-white'
+      default: 'bg-surface border border-border',
+      gradient: 'bg-gradient-to-br from-primary to-primary-light text-white shadow-glow-pink-lg'
     }
     
     return (
       <div
         ref={ref}
         className={cn(
-          'rounded-3xl p-6 shadow-lg transition-shadow hover:shadow-xl',
+          'rounded-2xl p-6 transition-all',
           variants[variant],
           className
         )}
