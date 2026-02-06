@@ -4,7 +4,7 @@ import StatsCards from '@/components/playground/StatsCards'
 import ProfitChart from '@/components/playground/ProfitChart'
 import TransactionsTable from '@/components/playground/TransactionsTable'
 import ResetButton from '@/components/playground/ResetButton'
-import { Sparkles } from 'lucide-react'
+import { IconSparkles } from '@tabler/icons-react'
 
 export default function PlaygroundPage() {
   return (
@@ -14,7 +14,7 @@ export default function PlaygroundPage() {
         {/* Заголовок */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
-            <Sparkles className="w-4 h-4" />
+            <IconSparkles size={16} stroke={2} />
             <span className="text-sm font-navigo font-medium">Интерактивная демо</span>
           </div>
           
