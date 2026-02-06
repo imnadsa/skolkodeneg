@@ -14,12 +14,32 @@ html {
 
 body {
   font-family: var(--font-navigo);
-  background-color: #FAFAFA;
-  color: #1A1A1A;
+  background-color: #1A1A1E;
+  color: #FFFFFF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-coolvetica);
+  color: #FFFFFF;
+}
+
+/* Кастомный scrollbar для темной темы */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #252529;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333337;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF0084;
 }
