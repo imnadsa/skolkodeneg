@@ -102,7 +102,7 @@ export default function TelegramSimulator() {
       <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
         <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-white border-2 border-primary/20">
           <Image
-            src="/logo.png"
+            src="/logo-12.png"
             alt="Сколько Денег"
             width={48}
             height={48}
