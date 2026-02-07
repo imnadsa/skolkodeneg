@@ -58,7 +58,7 @@ export default function Spotlight({ targetRect, padding = 8 }: SpotlightProps) {
           top: targetRect.top - padding,
           left: targetRect.left - padding,
           width: targetRect.width + padding * 2,
-          height: targetRect.height + padding * 2
+          height: targetRect.height + padding * 2,
         }}
       />
     </>
