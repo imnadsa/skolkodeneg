@@ -4,18 +4,27 @@ import StatsCards from '@/components/playground/StatsCards'
 import ProfitChart from '@/components/playground/ProfitChart'
 import TransactionsTable from '@/components/playground/TransactionsTable'
 import ResetButton from '@/components/playground/ResetButton'
-import ThemeToggle from '@/components/ThemeToggle'
+import ThemeToggle from '@/components/playground/ThemeToggle'
+import OnboardingOverlay from '@/components/onboarding/OnboardingOverlay'
+import RestartTourButton from '@/components/RestartTourButton'
 import { IconSparkles } from '@tabler/icons-react'
 
 export default function PlaygroundPage() {
   return (
     <>
+      <OnboardingOverlay />
       <ThemeToggle />
-      <main className="min-h-screen bg-background py-12 lg:py-20">
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+      <RestartTourButton />
+        title="Повторить тур"
+      >
+        <IconReload size={16} stroke={2} />
         
         {/* Заголовок */}
         <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4 border border-primary/20">
+            <IconSparkles size={16} stroke={2} />
+            <span className="text-sm font-navigo font-medium">Интерактивная демо</span>
+          </div>
           
           <h1 className="text-4xl lg:text-5xl font-coolvetica text-text-primary mb-4">
             Попробуйте прямо сейчас
