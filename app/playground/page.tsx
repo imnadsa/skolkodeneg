@@ -4,11 +4,14 @@ import StatsCards from '@/components/playground/StatsCards'
 import ProfitChart from '@/components/playground/ProfitChart'
 import TransactionsTable from '@/components/playground/TransactionsTable'
 import ResetButton from '@/components/playground/ResetButton'
+import ThemeToggle from '@/components/ThemeToggle'
 import { IconSparkles } from '@tabler/icons-react'
 
 export default function PlaygroundPage() {
   return (
-    <main className="min-h-screen bg-background py-12 lg:py-20">
+    <>
+      <ThemeToggle />
+      <main className="min-h-screen bg-background py-12 lg:py-20">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         
         {/* Заголовок */}
@@ -90,5 +93,6 @@ export default function PlaygroundPage() {
 
       </div>
     </main>
+    </>
   )
 }
