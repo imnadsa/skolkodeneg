@@ -166,7 +166,7 @@ export default function TelegramSimulator() {
   return (
     <Card 
       // 1. Добавил border-white/10 для внешней рамки
-      className="flex flex-col h-[650px] relative overflow-hidden p-0 border border-white/10 shadow-2xl" 
+      className="flex flex-col h-[650px] relative overflow-hidden p-0 border border-white/10 shadow-2xl tour-telegram" 
       style={{ backgroundColor: TG_COLORS.bg }}
     >
       
