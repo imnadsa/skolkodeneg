@@ -2,6 +2,7 @@
 
 import { IconArrowLeft, IconArrowRight, IconX } from '@tabler/icons-react'
 import { TourStepPosition } from '@/lib/tour-config'
+import { useEffect, useState } from 'react'
 
 interface TourTooltipProps {
   title: string
@@ -26,61 +27,75 @@ export default function TourTooltip({
   onSkip,
   targetRect
 }: TourTooltipProps) {
-  // Вычисляем позицию тултипа относительно элемента
-  const getTooltipPosition = () => {
-    const padding = 20
-    const tooltipWidth = 360
-    const tooltipMaxHeight = 300
-
-    switch (position) {
-      case 'right':
-        return {
-          top: targetRect.top + targetRect.height / 2,
-          left: targetRect.right + padding,
-          transform: 'translateY(-50%)'
-        }
-      case 'left':
-        return {
-          top: targetRect.top + targetRect.height / 2,
-          left: targetRect.left - tooltipWidth - padding,
-          transform: 'translateY(-50%)'
-        }
-      case 'bottom':
-        return {
-          top: targetRect.bottom + padding,
-          left: targetRect.left + targetRect.width / 2,
-          transform: 'translateX(-50%)'
-        }
-      case 'top':
-        return {
-          top: targetRect.top - padding,
-          left: targetRect.left + targetRect.width / 2,
-          transform: 'translate(-50%, -100%)'
-        }
-      default:
-        return {
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
-        }
+  const [tooltipRect, setTooltipRect] = useState<DOMRect | null>(null)
+  const tooltipRef = (node: HTMLDivElement | null) => {
+    if (node) {
+      setTooltipRect(node.getBoundingClientRect())
     }
   }
 
-  const tooltipStyle = getTooltipPosition()
+  // Вычисляем позицию тултипа относительно элемента
+  const getTooltipStyle = () => {
+    const padding = 20
+    const style: React.CSSProperties = { position: 'fixed' }
+
+    switch (position) {
+      case 'right':
+        style.top = targetRect.top + targetRect.height / 2
+        style.left = targetRect.right + padding
+        style.transform = 'translateY(-50%)'
+        break
+      
+      case 'left':
+        style.top = targetRect.top + targetRect.height / 2
+        style.right = window.innerWidth - targetRect.left + padding
+        style.transform = 'translateY(-50%)'
+        break
+      
+      case 'bottom':
+        style.top = targetRect.bottom + padding
+        style.left = targetRect.left + targetRect.width / 2
+        style.transform = 'translateX(-50%)'
+        break
+      
+      case 'top':
+        style.bottom = window.innerHeight - targetRect.top + padding
+        style.left = targetRect.left + targetRect.width / 2
+        style.transform = 'translateX(-50%)'
+        break
+      
+      default:
+        style.top = '50%'
+        style.left = '50%'
+        style.transform = 'translate(-50%, -50%)'
+    }
+
+    return style
+  }
+
+  const getArrowClass = () => {
+    switch (position) {
+      case 'right':
+        return 'absolute -left-2 top-1/2 -translate-y-1/2 border-l-2 border-b-2'
+      case 'left':
+        return 'absolute -right-2 top-1/2 -translate-y-1/2 border-r-2 border-t-2'
+      case 'bottom':
+        return 'absolute -top-2 left-1/2 -translate-x-1/2 border-l-2 border-t-2'
+      case 'top':
+        return 'absolute -bottom-2 left-1/2 -translate-x-1/2 border-r-2 border-b-2'
+      default:
+        return 'hidden'
+    }
+  }
 
   return (
     <div
-      className="fixed z-[60] w-[360px] bg-surface border-2 border-primary/30 rounded-2xl shadow-glow-pink-lg animate-in fade-in slide-in-from-bottom-4 duration-300"
-      style={tooltipStyle}
+      ref={tooltipRef}
+      className="z-[60] w-[360px] max-w-[90vw] bg-surface border-2 border-primary/30 rounded-2xl shadow-glow-pink-lg"
+      style={getTooltipStyle()}
     >
-      {/* Arrow pointer */}
-      <div className={`absolute w-4 h-4 bg-surface border-primary/30 rotate-45 ${
-        position === 'right' ? '-left-2 top-1/2 -translate-y-1/2 border-l-2 border-b-2' :
-        position === 'left' ? '-right-2 top-1/2 -translate-y-1/2 border-r-2 border-t-2' :
-        position === 'bottom' ? '-top-2 left-1/2 -translate-x-1/2 border-l-2 border-t-2' :
-        position === 'top' ? '-bottom-2 left-1/2 -translate-x-1/2 border-r-2 border-b-2' :
-        'hidden'
-      }`} />
+      {/* Arrow */}
+      <div className={`w-4 h-4 bg-surface border-primary/30 rotate-45 ${getArrowClass()}`} />
 
       <div className="p-6">
         {/* Header */}
