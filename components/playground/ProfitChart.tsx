@@ -17,7 +17,7 @@ export default function ProfitChart() {
   }))
 
   return (
-    <Card>
+    <Card className="tour-chart">
       <h3 className="text-lg font-coolvetica text-text-primary mb-4">Динамика прибыли</h3>
       
       <ResponsiveContainer width="100%" height={300}>
