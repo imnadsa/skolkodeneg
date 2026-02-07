@@ -15,89 +15,70 @@ export default function PlaygroundPage() {
       <OnboardingOverlay />
       <ThemeToggle />
       <RestartTourButton />
-        title="Повторить тур"
-      >
-        <IconReload size={16} stroke={2} />
+      
+      <main className="min-h-screen bg-background py-12 lg:py-20">
+        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         
-        {/* Заголовок */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4 border border-primary/20">
-            <IconSparkles size={16} stroke={2} />
-            <span className="text-sm font-navigo font-medium">Интерактивная демо</span>
-          </div>
-          
-          <h1 className="text-4xl lg:text-5xl font-coolvetica text-text-primary mb-4">
-            Попробуйте прямо сейчас
-          </h1>
-          
-          <p className="text-lg text-text-secondary font-navigo max-w-2xl mx-auto">
-            Добавьте транзакцию через «Telegram-бот» и посмотрите как она отобразится в дашборде.
-            Все данные хранятся локально в вашем браузере.
-          </p>
-        </div>
-
-        {/* Основной контент: Telegram + Дашборд */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-8">
-          
-          {/* Левая колонка: Telegram */}
-          <div>
-            <div className="mb-4">
-              <h2 className="text-2xl font-coolvetica text-text-primary mb-2">
-                1️⃣ Добавьте транзакцию
-              </h2>
-              <p className="text-text-secondary font-navigo">
-                Напишите команду в формате: <span className="font-mono text-primary">сумма категория счёт</span>
-              </p>
-            </div>
-            <TelegramSimulator />
-          </div>
-
-          {/* Правая колонка: Дашборд */}
-          <div className="space-y-6">
-            <div className="mb-4">
-              <h2 className="text-2xl font-coolvetica text-text-primary mb-2">
-                2️⃣ Смотрите результат
-              </h2>
-              <p className="text-text-secondary font-navigo">
-                Данные автоматически попадают в дашборд с аналитикой
-              </p>
+          {/* Заголовок */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4 border border-primary/20">
+              <IconSparkles size={16} stroke={2} />
+              <span className="text-sm font-navigo font-medium">Интерактивная демо</span>
             </div>
             
-            <BalanceCards />
-            <StatsCards />
+            <h1 className="text-4xl lg:text-5xl font-coolvetica text-text-primary mb-4">
+              Попробуйте прямо сейчас
+            </h1>
+            
+            <p className="text-text-secondary font-navigo text-lg max-w-2xl mx-auto">
+              Добавляйте транзакцию через «Telegram-бот» и посмотрите как она отобразится в дашборде. Все данные хранятся локально в вашем браузере.
+            </p>
+          </div>
+
+          {/* Основная сетка */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            {/* Telegram Simulator */}
+            <div className="lg:col-span-1">
+              <TelegramSimulator />
+            </div>
+
+            {/* Дашборд */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Баланс карточки */}
+              <BalanceCards />
+
+              {/* Финансовые показатели */}
+              <StatsCards />
+
+              {/* График */}
+              <ProfitChart />
+            </div>
+          </div>
+
+          {/* Google Таблица */}
+          <div className="mb-8">
+            <TransactionsTable />
+          </div>
+
+          {/* Кнопка сброса */}
+          <div className="flex justify-center">
+            <ResetButton />
+          </div>
+
+          {/* CTA блок */}
+          <div className="mt-16 bg-gradient-to-r from-primary to-primary-light rounded-3xl p-8 md:p-12 text-center shadow-glow-pink-lg">
+            <h2 className="text-3xl md:text-4xl font-coolvetica text-white mb-4">
+              Понравилось? Внедрите в свою клинику!
+            </h2>
+            <p className="text-white/90 font-navigo text-lg mb-6 max-w-2xl mx-auto">
+              Бесплатное внедрение за 1 день. Без обязательств.
+            </p>
+            <button className="bg-white text-primary hover:bg-white/90 font-navigo font-semibold py-4 px-8 rounded-full transition-all active:scale-95 shadow-lg">
+              Оставить заявку
+            </button>
           </div>
         </div>
-
-        {/* График */}
-        <div className="mb-8">
-          <ProfitChart />
-        </div>
-
-        {/* Таблица транзакций */}
-        <div>
-          <TransactionsTable />
-        </div>
-
-        {/* Кнопка сброса */}
-        <div className="flex justify-center mt-8">
-          <ResetButton />
-        </div>
-
-        {/* Призыв к действию */}
-        <div className="mt-16 text-center bg-gradient-to-br from-primary to-primary-light rounded-3xl p-12 text-white shadow-glow-pink-lg">
-          <h2 className="text-3xl font-coolvetica mb-4">
-            Понравилось? Внедрите в свою клинику!
-          </h2>
-          <p className="text-lg mb-6 opacity-90">
-            Бесплатное внедрение за 1 день. Без обязательств.
-          </p>
-          <button className="bg-white text-primary px-8 py-4 rounded-full font-navigo font-semibold text-lg hover:bg-gray-100 transition-all shadow-xl">
-            Оставить заявку
-          </button>
-        </div>
-
-      </div>
-    </main>
+      </main>
     </>
   )
 }
