@@ -8,8 +8,8 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 export default function Badge({ type = 'neutral', className, children, ...props }: BadgeProps) {
   const variants = {
-    income: 'bg-success/20 text-success border-success/30',
-    expense: 'bg-primary/20 text-primary-light border-primary/30',
+    income: 'bg-success/20 text-success border-success/30 dark:bg-success/20 dark:text-success dark:border-success/30',
+    expense: 'bg-primary/20 text-primary border-primary/30 dark:bg-primary/20 dark:text-primary-light dark:border-primary/30',
     neutral: 'bg-surface-light text-text-secondary border-border'
   }
   
