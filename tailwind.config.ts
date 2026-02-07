@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,17 +13,17 @@ const config: Config = {
         primary: "#FF0084",
         "primary-light": "#FF4DA6",
         "primary-dark": "#CC006A",
-        background: "#1A1A1E",
-        "background-alt": "#252529",
-        surface: "#2A2A2F",
-        "surface-light": "#333337",
+        background: "var(--background)",
+        "background-alt": "var(--background-alt)",
+        surface: "var(--surface)",
+        "surface-light": "var(--surface-light)",
         success: "#00D9A3",
         text: {
-          primary: "#FFFFFF",
-          secondary: "#B4B4B8",
-          tertiary: "#808087",
+          primary: "var(--text-primary)",
+          secondary: "var(--text-secondary)",
+          tertiary: "var(--text-tertiary)",
         },
-        border: "#333337",
+        border: "var(--border)",
       },
       fontFamily: {
         coolvetica: ["var(--font-coolvetica)"],
