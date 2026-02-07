@@ -15,14 +15,16 @@ export default function Spotlight({ targetRect, padding = 8 }: SpotlightProps) {
           className="absolute left-0 right-0 bg-background/80 backdrop-blur-sm"
           style={{
             top: 0,
-            height: targetRect.top - padding
+            height: Math.max(0, targetRect.top - padding)
           }}
         />
         
         {/* Right */}
         <div
-          className="absolute top-0 bottom-0 bg-background/80 backdrop-blur-sm"
+          className="absolute bg-background/80 backdrop-blur-sm"
           style={{
+            top: Math.max(0, targetRect.top - padding),
+            bottom: Math.max(0, window.innerHeight - targetRect.bottom - padding),
             left: targetRect.right + padding,
             right: 0
           }}
@@ -39,23 +41,24 @@ export default function Spotlight({ targetRect, padding = 8 }: SpotlightProps) {
         
         {/* Left */}
         <div
-          className="absolute top-0 bottom-0 bg-background/80 backdrop-blur-sm"
+          className="absolute bg-background/80 backdrop-blur-sm"
           style={{
+            top: Math.max(0, targetRect.top - padding),
+            bottom: Math.max(0, window.innerHeight - targetRect.bottom - padding),
             left: 0,
-            right: window.innerWidth - (targetRect.left - padding)
+            right: window.innerWidth - targetRect.left + padding
           }}
         />
       </div>
 
-      {/* Пульсирующая рамка вокруг элемента */}
+      {/* Пульсирующая рамка */}
       <div
         className="fixed z-[55] rounded-2xl pointer-events-none animate-pulse-border"
         style={{
           top: targetRect.top - padding,
           left: targetRect.left - padding,
           width: targetRect.width + padding * 2,
-          height: targetRect.height + padding * 2,
-          boxShadow: '0 0 0 3px rgba(255, 0, 132, 0.5), 0 0 30px rgba(255, 0, 132, 0.3)'
+          height: targetRect.height + padding * 2
         }}
       />
     </>
