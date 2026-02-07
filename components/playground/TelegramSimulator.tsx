@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { IconSend, IconCheckbox } from '@tabler/icons-react'
+import { IconSend } from '@tabler/icons-react'
 import Image from 'next/image'
 import { usePlayground } from '@/lib/playground-store'
 import { parseTransaction, isCategoriesCommand, isHelpCommand } from '@/lib/transaction-parser'
@@ -17,67 +17,55 @@ interface Message {
   buttons?: { text: string; icon?: string; action: string }[]
 }
 
-// Шаги онбординга
-const ONBOARDING_STEPS = [
+// Шаги онбординга ВНУТРИ бота (после главного тура)
+const BOT_ONBOARDING_STEPS = [
   {
     step: 0,
-    title: 'Знакомство',
-    message: 'Привет! 👋 Я бот "Сколько Денег".\n\nДавайте я покажу как со мной работать!',
-    buttons: [
-      { text: '🚀 Начать обучение', action: 'start_tutorial' },
-      { text: '⏭️ Пропустить', action: 'skip_tutorial' },
-    ]
+    title: 'Формат транзакции',
+    message: 'Чтобы добавить транзакцию, напишите:\n\n<сумма> <категория> <счёт> [примечание]\n\nНапример:\n5000 зп нал Петров',
   },
   {
     step: 1,
-    title: 'Формат команды',
-    message: '📝 Чтобы добавить транзакцию, напишите:\n\n<сумма> <категория> <счёт> [примечание]\n\nНапример:\n💬 5000 зп нал Петров',
-    buttons: [
-      { text: '✅ Понятно, дальше', action: 'next_step' },
-      { text: '📊 Показать категории', action: 'show_all_categories' },
-    ]
+    title: 'Попробуйте сами',
+    message: 'Отлично! Теперь попробуйте сами.\n\nДобавьте расход на зарплату:\nНапишите: 5000 зп нал',
   },
   {
     step: 2,
-    title: 'Попробуйте сами',
-    message: '🎯 Отлично! Теперь попробуйте сами.\n\nДобавьте расход на зарплату:\n💬 Напишите: 5000 зп нал',
-    buttons: []
-  },
-  {
-    step: 3,
-    title: 'Готово!',
-    message: '🎉 Отлично! Вы добавили первую транзакцию!\n\nТеперь вы можете:\n• Смотреть категории\n• Добавлять свои транзакции\n• Следить за балансом',
-    buttons: [
-      { text: '📊 Категории расходов', action: 'show_expenses' },
-      { text: '💰 Категории доходов', action: 'show_income' },
-      { text: '🏦 Счета бизнеса', action: 'show_accounts' },
-      { text: 'ℹ️ Помощь', action: 'help' },
-    ]
+    title: 'Категории',
+    message: 'Отлично! Вы добавили первую транзакцию!\n\nИспользуйте кнопки ниже чтобы посмотреть категории, счета или получить помощь.',
   }
 ]
 
 export default function TelegramSimulator() {
   const [input, setInput] = useState('')
-  const [onboardingStep, setOnboardingStep] = useState(0)
-  const [showOnboarding, setShowOnboarding] = useState(true)
+  const [botOnboardingActive, setBotOnboardingActive] = useState(false)
+  const [botOnboardingStep, setBotOnboardingStep] = useState(0)
+  const [showStartButton, setShowStartButton] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
-      text: ONBOARDING_STEPS[0].message,
+      text: 'Привет! Я бот "Сколько Денег".\n\nГотовы научиться добавлять транзакции?',
       sender: 'bot',
-      timestamp: new Date(),
-      buttons: ONBOARDING_STEPS[0].buttons
+      timestamp: new Date()
     }
   ])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const addTransaction = usePlayground((s) => s.addTransaction)
 
-  // Автоскролл только при первой загрузке
+  // Слушаем событие завершения главного тура
   useEffect(() => {
-    if (messages.length === 1) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'auto' })
+    const handleTourComplete = () => {
+      setShowStartButton(true)
     }
+
+    window.addEventListener('main-tour-completed', handleTourComplete)
+    return () => window.removeEventListener('main-tour-completed', handleTourComplete)
   }, [])
+
+  // Автоскролл при добавлении сообщений
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
 
   const addMessage = (text: string, sender: 'user' | 'bot', buttons?: { text: string; icon?: string; action: string }[]) => {
     const newMessage: Message = {
@@ -90,43 +78,41 @@ export default function TelegramSimulator() {
     setMessages((prev) => [...prev, newMessage])
   }
 
+  const startBotOnboarding = () => {
+    setShowStartButton(false)
+    setBotOnboardingActive(true)
+    setBotOnboardingStep(0)
+    
+    setTimeout(() => {
+      addMessage(BOT_ONBOARDING_STEPS[0].message, 'bot')
+    }, 300)
+  }
+
+  const nextBotOnboardingStep = () => {
+    if (botOnboardingStep < BOT_ONBOARDING_STEPS.length - 1) {
+      setBotOnboardingStep(prev => prev + 1)
+      setTimeout(() => {
+        addMessage(BOT_ONBOARDING_STEPS[botOnboardingStep + 1].message, 'bot')
+      }, 300)
+    } else {
+      // Завершение онбординга бота
+      setBotOnboardingActive(false)
+    }
+  }
+
   const handleButtonClick = (action: string) => {
-    if (action === 'start_tutorial') {
-      setOnboardingStep(1)
-      const step = ONBOARDING_STEPS[1]
-      setTimeout(() => addMessage(step.message, 'bot', step.buttons), 300)
-    } else if (action === 'skip_tutorial') {
-      setShowOnboarding(false)
-      setOnboardingStep(3)
-      setTimeout(() => addMessage(ONBOARDING_STEPS[3].message, 'bot', ONBOARDING_STEPS[3].buttons), 300)
-    } else if (action === 'next_step') {
-      if (onboardingStep === 1) {
-        setOnboardingStep(2)
-        const step = ONBOARDING_STEPS[2]
-        setTimeout(() => addMessage(step.message, 'bot', step.buttons), 300)
-      }
-    } else if (action === 'show_all_categories') {
+    if (action === 'show_expenses') {
       const expenseList = EXPENSE_CATEGORIES.map(c => `• ${c.name}`).join('\n')
-      const incomeList = INCOME_CATEGORIES.map(c => `• ${c.name}`).join('\n')
-      addMessage(`📤 РАСХОДЫ:\n${expenseList}\n\n📥 ДОХОДЫ:\n${incomeList}`, 'bot', [
-        { text: '✅ Понятно, дальше', action: 'next_step' }
-      ])
-    } else if (action === 'show_expenses') {
-      const expenseList = EXPENSE_CATEGORIES.map(c => `• ${c.name}`).join('\n')
-      addMessage('📤 Категории расходов:\n\n' + expenseList, 'bot')
+      addMessage('Категории расходов:\n\n' + expenseList, 'bot')
     } else if (action === 'show_income') {
       const incomeList = INCOME_CATEGORIES.map(c => `• ${c.name}`).join('\n')
-      addMessage('📥 Категории доходов:\n\n' + incomeList, 'bot')
+      addMessage('Категории доходов:\n\n' + incomeList, 'bot')
     } else if (action === 'show_accounts') {
-      addMessage('🏦 Счета бизнеса:\n\n• 💵 Наличные (нал)\n• 💳 Банковская карта (безнал, карта)', 'bot')
+      addMessage('Счета бизнеса:\n\n• Наличные (нал)\n• Банковская карта (безнал, карта)', 'bot')
     } else if (action === 'help') {
       addMessage(
-        'ℹ️ Формат добавления транзакции:\n\n<сумма> <категория> <счёт> [примечание]\n\n📝 Примеры:\n• 5000 зп нал Петров\n• 100000 оплата карта Иванов\n• 20000 маркетинг безнал Реклама ВК',
-        'bot',
-        [
-          { text: '📊 Категории расходов', action: 'show_expenses' },
-          { text: '💰 Категории доходов', action: 'show_income' },
-        ]
+        'Формат добавления транзакции:\n\n<сумма> <категория> <счёт> [примечание]\n\nПримеры:\n• 5000 зп нал Петров\n• 100000 оплата карта Иванов\n• 20000 маркетинг безнал Реклама ВК',
+        'bot'
       )
     }
   }
@@ -150,7 +136,7 @@ export default function TelegramSimulator() {
         const incomeList = INCOME_CATEGORIES.map(c => `${c.name}`).join('\n')
         const expenseList = EXPENSE_CATEGORIES.map(c => `${c.name}`).join('\n')
         addMessage(
-          `📥 ДОХОДЫ:\n${incomeList}\n\n📤 РАСХОДЫ:\n${expenseList}`,
+          `ДОХОДЫ:\n${incomeList}\n\nРАСХОДЫ:\n${expenseList}`,
           'bot'
         )
       }, 300)
@@ -161,24 +147,17 @@ export default function TelegramSimulator() {
       setTimeout(() => {
         if (result.success && result.transaction) {
           addTransaction(result.transaction)
-          
-          // Если онбординг на шаге 2 (попробуйте сами) и команда правильная
-          if (onboardingStep === 2 && showOnboarding) {
-            setOnboardingStep(3)
-            setShowOnboarding(false)
-            addMessage(
-              `✅ Записано!\n\n${result.transaction.type === 'income' ? '📥' : '📤'} ${result.transaction.category}\n💰 ${result.transaction.amount.toLocaleString('ru-RU')}₽\n🏦 ${result.transaction.account === 'cash' ? 'Наличные' : 'Карта'}${result.transaction.note ? `\n📝 ${result.transaction.note}` : ''}`,
-              'bot'
-            )
-            setTimeout(() => addMessage(ONBOARDING_STEPS[3].message, 'bot', ONBOARDING_STEPS[3].buttons), 1000)
-          } else {
-            addMessage(
-              `✅ Записано!\n\n${result.transaction.type === 'income' ? '📥' : '📤'} ${result.transaction.category}\n💰 ${result.transaction.amount.toLocaleString('ru-RU')}₽\n🏦 ${result.transaction.account === 'cash' ? 'Наличные' : 'Карта'}${result.transaction.note ? `\n📝 ${result.transaction.note}` : ''}`,
-              'bot'
-            )
+          addMessage(
+            `Записано!\n\n${result.transaction.type === 'income' ? 'Доход' : 'Расход'}: ${result.transaction.category}\nСумма: ${result.transaction.amount.toLocaleString('ru-RU')}₽\nСчёт: ${result.transaction.account === 'cash' ? 'Наличные' : 'Карта'}${result.transaction.note ? `\nПримечание: ${result.transaction.note}` : ''}`,
+            'bot'
+          )
+
+          // Если в режиме онбординга бота на шаге 1 (попробуйте сами)
+          if (botOnboardingActive && botOnboardingStep === 1) {
+            setTimeout(() => nextBotOnboardingStep(), 1000)
           }
         } else {
-          addMessage(`❌ ${result.error}\n\nНапишите "помощь" для примеров`, 'bot')
+          addMessage(`Ошибка: ${result.error}\n\nНапишите "помощь" для примеров`, 'bot')
         }
       }, 300)
     }
@@ -194,7 +173,27 @@ export default function TelegramSimulator() {
   }
 
   return (
-    <Card className="flex flex-col h-[600px]">
+    <Card className="flex flex-col h-[600px] tour-telegram relative">
+      {/* Overlay с кнопкой "Начать работу с ботом" */}
+      {showStartButton && (
+        <div className="absolute inset-0 z-10 bg-background/80 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+          <div className="text-center space-y-4 p-8">
+            <h3 className="text-2xl font-coolvetica text-text-primary">
+              Теперь попробуйте с ботом!
+            </h3>
+            <p className="text-text-secondary font-navigo">
+              Научитесь добавлять транзакции через Telegram
+            </p>
+            <button
+              onClick={startBotOnboarding}
+              className="bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white font-navigo font-semibold py-3 px-8 rounded-full transition-all shadow-glow-pink active:scale-95"
+            >
+              Начать работу с ботом
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Шапка чата */}
       <div className="pb-4 border-b border-border">
         <div className="flex items-center gap-3 mb-2">
@@ -216,21 +215,21 @@ export default function TelegramSimulator() {
           </div>
         </div>
         
-        {/* Прогресс-бар онбординга */}
-        {showOnboarding && onboardingStep < 3 && (
+        {/* Прогресс-бар онбординга БОТА */}
+        {botOnboardingActive && (
           <div className="mt-3">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs text-text-secondary font-navigo">
-                {ONBOARDING_STEPS[onboardingStep]?.title}
+                {BOT_ONBOARDING_STEPS[botOnboardingStep]?.title}
               </p>
               <p className="text-xs text-primary font-navigo font-semibold">
-                {onboardingStep + 1}/4
+                {botOnboardingStep + 1}/{BOT_ONBOARDING_STEPS.length}
               </p>
             </div>
             <div className="h-1.5 bg-surface-light rounded-full overflow-hidden">
               <div 
                 className="h-full bg-gradient-to-r from-primary to-primary-light transition-all duration-500 rounded-full"
-                style={{ width: `${((onboardingStep + 1) / 4) * 100}%` }}
+                style={{ width: `${((botOnboardingStep + 1) / BOT_ONBOARDING_STEPS.length) * 100}%` }}
               />
             </div>
           </div>
@@ -273,7 +272,7 @@ export default function TelegramSimulator() {
 
       {/* Инпут */}
       <div className="pt-4 border-t border-border">
-        <div className="flex gap-2">
+        <div className="flex gap-2 mb-3">
           <input
             type="text"
             value={input}
@@ -290,6 +289,18 @@ export default function TelegramSimulator() {
             <IconSend size={20} stroke={2} className="text-white" />
           </button>
         </div>
+
+        {/* ФИКСИРОВАННЫЕ кнопки клавиатуры внизу */}
+        <TelegramButtons 
+          buttons={[
+            { text: 'Категории расходов', action: 'show_expenses' },
+            { text: 'Категории доходов', action: 'show_income' },
+            { text: 'Счета бизнеса', action: 'show_accounts' },
+            { text: 'Помощь', action: 'help' },
+          ]} 
+          onButtonClick={handleButtonClick} 
+        />
+        
         <p className="text-xs text-text-tertiary mt-2 text-center">
           Формат: <span className="font-mono text-primary">сумма категория счёт примечание</span>
         </p>
