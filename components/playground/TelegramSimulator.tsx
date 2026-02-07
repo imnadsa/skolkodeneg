@@ -41,19 +41,14 @@ export default function TelegramSimulator() {
   const [botOnboardingActive, setBotOnboardingActive] = useState(false)
   const [botOnboardingStep, setBotOnboardingStep] = useState(0)
   const [showStartButton, setShowStartButton] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
-
-  // Добавляем приветственное сообщение только на клиенте
-  useEffect(() => {
-    if (messages.length === 0) {
-      setMessages([{
-        id: '0',
-        text: 'Привет! Я бот "Сколько Денег".\n\nГотовы научиться добавлять транзакции?',
-        sender: 'bot',
-        timestamp: new Date()
-      }])
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: '0',
+      text: 'Привет! Я бот "Сколько Денег".\n\nГотовы научиться добавлять транзакции?',
+      sender: 'bot',
+      timestamp: new Date(2024, 0, 1, 12, 0, 0)  // ← ФИКСИРОВАННАЯ дата!
     }
-  }, [])
+  ])
 
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
