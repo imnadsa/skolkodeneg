@@ -8,7 +8,6 @@
   box-sizing: border-box;
 }
 
-/* Темная тема (по умолчанию) */
 :root,
 .dark {
   --background: #1A1A1E;
