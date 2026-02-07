@@ -12,24 +12,31 @@ interface OnboardingOverlayProps {
 }
 
 export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps) {
+  const [mounted, setMounted] = useState(false)
   const [showWelcome, setShowWelcome] = useState(false)
   const [showTour, setShowTour] = useState(false)
   const [showCompletion, setShowCompletion] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null)
 
-  // Проверяем, проходил ли пользователь тур
+  // Ждём монтирования на клиенте
   useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Проверяем localStorage только на клиенте
+  useEffect(() => {
+    if (!mounted) return
+    
     const tourCompleted = localStorage.getItem(TOUR_STORAGE_KEY)
     if (!tourCompleted) {
-      // Задержка для загрузки DOM
       setTimeout(() => setShowWelcome(true), 500)
     }
-  }, [])
+  }, [mounted])
 
   // Обновляем позицию подсвеченного элемента
   useEffect(() => {
-    if (!showTour) return
+    if (!showTour || !mounted) return
 
     const updateTargetRect = () => {
       const step = TOUR_STEPS[currentStep]
@@ -38,18 +45,14 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
       if (element) {
         const rect = element.getBoundingClientRect()
         setTargetRect(rect)
-        
-        // Скроллим к элементу если он не в видимости
         element.scrollIntoView({ behavior: 'smooth', block: 'center' })
       }
     }
 
     updateTargetRect()
-
-    // Обновляем при ресайзе окна
     window.addEventListener('resize', updateTargetRect)
     return () => window.removeEventListener('resize', updateTargetRect)
-  }, [showTour, currentStep])
+  }, [showTour, currentStep, mounted])
 
   const handleStartTour = () => {
     setShowWelcome(false)
@@ -73,7 +76,9 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
   const handleSkipTour = () => {
     setShowTour(false)
     setShowWelcome(false)
-    localStorage.setItem(TOUR_STORAGE_KEY, 'true')
+    if (mounted) {
+      localStorage.setItem(TOUR_STORAGE_KEY, 'true')
+    }
     onComplete?.()
   }
 
@@ -84,7 +89,9 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
 
   const handleCloseCompletion = () => {
     setShowCompletion(false)
-    localStorage.setItem(TOUR_STORAGE_KEY, 'true')
+    if (mounted) {
+      localStorage.setItem(TOUR_STORAGE_KEY, 'true')
+    }
     
     // Отправляем событие что тур завершён
     window.dispatchEvent(new Event('main-tour-completed'))
@@ -92,31 +99,35 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
     onComplete?.()
   }
 
-  // Функция для повторного запуска тура (вызывается из родителя)
+  // Функция для повторного запуска тура
   const restartTour = () => {
     setCurrentStep(0)
     setShowWelcome(true)
-    localStorage.removeItem(TOUR_STORAGE_KEY)
+    if (mounted) {
+      localStorage.removeItem(TOUR_STORAGE_KEY)
+    }
   }
 
-  // Экспортируем функцию для внешнего использования
   useEffect(() => {
-    (window as any).__restartTour = restartTour
-    return () => {
-      delete (window as any).__restartTour
+    if (mounted) {
+      (window as any).__restartTour = restartTour
+      return () => {
+        delete (window as any).__restartTour
+      }
     }
-  }, [])
+  }, [mounted])
+
+  // Не рендерим ничего до монтирования
+  if (!mounted) return null
 
   const step = TOUR_STEPS[currentStep]
 
   return (
     <>
-      {/* Welcome Modal */}
       {showWelcome && (
         <WelcomeModal onStart={handleStartTour} />
       )}
 
-      {/* Tour */}
       {showTour && targetRect && (
         <>
           <Spotlight 
@@ -137,7 +148,6 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
         </>
       )}
 
-      {/* Completion Modal */}
       {showCompletion && (
         <CompletionModal onClose={handleCloseCompletion} />
       )}
