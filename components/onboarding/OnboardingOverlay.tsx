@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { TOUR_STEPS, TOUR_STORAGE_KEY } from '@/lib/tour-config'
 import WelcomeModal from './WelcomeModal'
 import TourTooltip from './TourTooltip'
@@ -19,40 +19,71 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
   const [currentStep, setCurrentStep] = useState(0)
   const [targetRect, setTargetRect] = useState<DOMRect | null>(null)
 
-  // Ждём монтирования на клиенте
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // Проверяем localStorage только на клиенте
   useEffect(() => {
     if (!mounted) return
-    
     const tourCompleted = localStorage.getItem(TOUR_STORAGE_KEY)
     if (!tourCompleted) {
       setTimeout(() => setShowWelcome(true), 500)
     }
   }, [mounted])
 
-  // Обновляем позицию подсвеченного элемента
-  useEffect(() => {
-    if (!showTour || !mounted) return
+  // ФУНКЦИЯ ОБНОВЛЕНИЯ ПОЗИЦИИ (СУПЕР ВАЖНАЯ)
+  const updateTargetRect = useCallback(() => {
+    if (!showTour) return
 
-    const updateTargetRect = () => {
-      const step = TOUR_STEPS[currentStep]
-      const element = document.querySelector(step.target)
-      
-      if (element) {
-        const rect = element.getBoundingClientRect()
-        setTargetRect(rect)
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }
+    const step = TOUR_STEPS[currentStep]
+    const element = document.querySelector(step.target)
+    
+    if (element) {
+      const rect = element.getBoundingClientRect()
+      // Проверяем, изменились ли координаты, чтобы не рендерить лишний раз
+      setTargetRect(prev => {
+        if (prev && 
+            prev.top === rect.top && 
+            prev.left === rect.left && 
+            prev.width === rect.width && 
+            prev.height === rect.height) {
+          return prev
+        }
+        return rect
+      })
+    }
+  }, [showTour, currentStep])
+
+  // Эффект для слежения за скроллом и ресайзом
+  useEffect(() => {
+    if (!showTour) return
+
+    // Сразу скроллим к элементу
+    const step = TOUR_STEPS[currentStep]
+    const element = document.querySelector(step.target)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
 
+    // Запускаем обновление позиции
     updateTargetRect()
+    
+    // Добавляем слушатели событий (чтобы подсветка не уезжала при скролле)
     window.addEventListener('resize', updateTargetRect)
-    return () => window.removeEventListener('resize', updateTargetRect)
-  }, [showTour, currentStep, mounted])
+    window.addEventListener('scroll', updateTargetRect, true) // true для захвата скролла вложенных элементов
+
+    // Небольшой хак: проверяем позицию еще раз через небольшие промежутки времени, 
+    // пока идет анимация скролла
+    const interval = setInterval(updateTargetRect, 100)
+    const timeout = setTimeout(() => clearInterval(interval), 1000)
+
+    return () => {
+      window.removeEventListener('resize', updateTargetRect)
+      window.removeEventListener('scroll', updateTargetRect, true)
+      clearInterval(interval)
+      clearTimeout(timeout)
+    }
+  }, [showTour, currentStep, updateTargetRect])
 
   const handleStartTour = () => {
     setShowWelcome(false)
@@ -92,14 +123,10 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
     if (mounted) {
       localStorage.setItem(TOUR_STORAGE_KEY, 'true')
     }
-    
-    // Отправляем событие что тур завершён
     window.dispatchEvent(new Event('main-tour-completed'))
-    
     onComplete?.()
   }
 
-  // Функция для повторного запуска тура
   const restartTour = () => {
     setCurrentStep(0)
     setShowWelcome(true)
@@ -117,16 +144,13 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
     }
   }, [mounted])
 
-  // Не рендерим ничего до монтирования
   if (!mounted) return null
 
   const step = TOUR_STEPS[currentStep]
 
   return (
     <>
-      {showWelcome && (
-        <WelcomeModal onStart={handleStartTour} />
-      )}
+      {showWelcome && <WelcomeModal onStart={handleStartTour} />}
 
       {showTour && targetRect && (
         <>
@@ -148,9 +172,7 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
         </>
       )}
 
-      {showCompletion && (
-        <CompletionModal onClose={handleCloseCompletion} />
-      )}
+      {showCompletion && <CompletionModal onClose={handleCloseCompletion} />}
     </>
   )
 }
