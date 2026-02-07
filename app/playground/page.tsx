@@ -16,10 +16,6 @@ export default function PlaygroundPage() {
         
         {/* Заголовок */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4 border border-primary/20">
-            <IconSparkles size={16} stroke={2} />
-            <span className="text-sm font-navigo font-medium">Интерактивная демо</span>
-          </div>
           
           <h1 className="text-4xl lg:text-5xl font-coolvetica text-text-primary mb-4">
             Попробуйте прямо сейчас
