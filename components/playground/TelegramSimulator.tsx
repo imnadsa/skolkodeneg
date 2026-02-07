@@ -7,22 +7,31 @@ import { usePlayground } from '@/lib/playground-store'
 import { parseTransaction, isCategoriesCommand, isHelpCommand } from '@/lib/transaction-parser'
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '@/lib/categories'
 import Card from '@/components/ui/Card'
+import TelegramButtons from './TelegramButtons'
 
 interface Message {
   id: string
   text: string
   sender: 'user' | 'bot'
   timestamp: Date
+  buttons?: { text: string; icon?: string; action: string }[]
 }
 
 export default function TelegramSimulator() {
   const [input, setInput] = useState('')
+  const [onboardingStep, setOnboardingStep] = useState(0)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
-      text: 'Привет! 👋 Я бот "Сколько Денег". Добавляйте транзакции в формате:\n\n<сумма> <категория> <счёт> [примечание]\n\nНапример: 5000 зп нал\n\nНапишите "категории" чтобы увидеть список категорий',
+      text: 'Привет! 👋 Я бот "Сколько Денег".\n\nДавайте я покажу как со мной работать!',
       sender: 'bot',
-      timestamp: new Date()
+      timestamp: new Date(),
+      buttons: [
+        { text: '📊 Категории расходов', action: 'show_expenses' },
+        { text: '💰 Категории доходов', action: 'show_income' },
+        { text: '🏦 Счета бизнеса', action: 'show_accounts' },
+        { text: 'ℹ️ Помощь', action: 'help' },
+      ]
     }
   ])
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -35,14 +44,42 @@ export default function TelegramSimulator() {
     }
   }, [])
 
-  const addMessage = (text: string, sender: 'user' | 'bot') => {
+  const addMessage = (text: string, sender: 'user' | 'bot', buttons?: { text: string; icon?: string; action: string }[]) => {
     const newMessage: Message = {
       id: Date.now().toString(),
       text,
       sender,
-      timestamp: new Date()
+      timestamp: new Date(),
+      buttons
     }
     setMessages((prev) => [...prev, newMessage])
+  }
+
+  const handleButtonClick = (action: string) => {
+    if (action === 'show_expenses') {
+      const expenseList = EXPENSE_CATEGORIES.map(c => `• ${c.name}`).join('\n')
+      addMessage('📤 Категории расходов:\n\n' + expenseList, 'bot')
+    } else if (action === 'show_income') {
+      const incomeList = INCOME_CATEGORIES.map(c => `• ${c.name}`).join('\n')
+      addMessage('📥 Категории доходов:\n\n' + incomeList, 'bot')
+    } else if (action === 'show_accounts') {
+      addMessage('🏦 Счета бизнеса:\n\n• 💵 Наличные (нал)\n• 💳 Банковская карта (безнал, карта)', 'bot')
+    } else if (action === 'help') {
+      addMessage(
+        'ℹ️ Формат добавления транзакции:\n\n<сумма> <категория> <счёт> [примечание]\n\n📝 Примеры:\n• 5000 зп нал Петров\n• 100000 оплата карта Иванов\n• 20000 маркетинг безнал Реклама ВК',
+        'bot',
+        [
+          { text: '📊 Категории расходов', action: 'show_expenses' },
+          { text: '💰 Категории доходов', action: 'show_income' },
+        ]
+      )
+    } else if (action === 'start_tutorial') {
+      setOnboardingStep(1)
+      addMessage(
+        '🎓 Отлично! Давайте попробуем добавить первую транзакцию.\n\nНапример, зарплата сотруднику:\n\n💬 Напишите: 5000 зп нал',
+        'bot'
+      )
+    }
   }
 
   const handleSend = () => {
@@ -101,7 +138,7 @@ export default function TelegramSimulator() {
       <div className="flex items-center gap-3 pb-4 border-b border-border">
         <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-surface-light border-2 border-primary/30">
           <Image
-            src="/logo-12.png"
+            src="/logo.png"
             alt="Сколько Денег"
             width={48}
             height={48}
@@ -120,22 +157,32 @@ export default function TelegramSimulator() {
       {/* Сообщения */}
       <div className="flex-1 overflow-y-auto py-4 space-y-3">
         {messages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
+          <div key={msg.id} className="space-y-2">
             <div
-              className={`max-w-[80%] px-4 py-3 rounded-2xl whitespace-pre-line ${
-                msg.sender === 'user'
-                  ? 'bg-primary text-white rounded-br-sm shadow-glow-pink'
-                  : 'bg-surface-light text-text-primary rounded-bl-sm'
-              }`}
+              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <p className="text-sm font-navigo">{msg.text}</p>
-              <p className={`text-[10px] mt-1 ${msg.sender === 'user' ? 'text-white/70' : 'text-text-tertiary'}`}>
-                {msg.timestamp.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
-              </p>
+              <div
+                className={`max-w-[80%] px-4 py-3 rounded-2xl whitespace-pre-line ${
+                  msg.sender === 'user'
+                    ? 'bg-primary text-white rounded-br-sm shadow-glow-pink'
+                    : 'bg-surface-light text-text-primary rounded-bl-sm'
+                }`}
+              >
+                <p className="text-sm font-navigo">{msg.text}</p>
+                <p className={`text-[10px] mt-1 ${msg.sender === 'user' ? 'text-white/70' : 'text-text-tertiary'}`}>
+                  {msg.timestamp.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              </div>
             </div>
+            
+            {/* Кнопки под сообщением бота */}
+            {msg.sender === 'bot' && msg.buttons && (
+              <div className="flex justify-start">
+                <div className="max-w-[80%] w-full">
+                  <TelegramButtons buttons={msg.buttons} onButtonClick={handleButtonClick} />
+                </div>
+              </div>
+            )}
           </div>
         ))}
         <div ref={messagesEndRef} />
