@@ -2,8 +2,7 @@
 
 import { IconArrowLeft, IconArrowRight, IconX } from '@tabler/icons-react'
 import { TourStepPosition } from '@/lib/tour-config'
-// Убрали useState из импортов, он не нужен
-// import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface TourTooltipProps {
   title: string
@@ -28,29 +27,43 @@ export default function TourTooltip({
   onSkip,
   targetRect
 }: TourTooltipProps) {
-  // ❌ УДАЛИТЕ ЭТИ СТРОКИ - ОНИ ВЫЗЫВАЮТ ЦИКЛ
-  // const [tooltipRect, setTooltipRect] = useState<DOMRect | null>(null)
-  // const tooltipRef = (node: HTMLDivElement | null) => {
-  //   if (node) {
-  //     setTooltipRect(node.getBoundingClientRect())
-  //   }
-  // }
+  // Состояние для определения мобильного устройства
+  const [isMobile, setIsMobile] = useState(false)
 
-  // Вычисляем позицию тултипа относительно элемента
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile() // Проверка при загрузке
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Вычисляем позицию
   const getTooltipStyle = () => {
-     // ... (код функции остается тем же, она использует targetRect, а не tooltipRect)
-     const padding = 20
-     const style: React.CSSProperties = { position: 'fixed' }
-     
-     // ... (весь switch case оставляем как есть)
-     
-     switch (position) {
+    // 📱 МОБИЛЬНАЯ ВЕРСИЯ: Всегда снизу экрана (как шторка)
+    if (isMobile) {
+      return {
+        position: 'fixed' as const,
+        bottom: '24px',
+        left: '20px',
+        right: '20px',
+        zIndex: 60,
+        transform: 'none', // Убираем центрирование
+        maxWidth: '100%',
+        width: 'auto'
+      }
+    }
+
+    // 🖥 ДЕСКТОП ВЕРСИЯ
+    const padding = 24 // Увеличил отступ, чтобы не наезжало на элемент
+    const style: React.CSSProperties = { position: 'fixed', zIndex: 60 }
+
+    switch (position) {
       case 'right':
         style.top = targetRect.top + targetRect.height / 2
         style.left = targetRect.right + padding
         style.transform = 'translateY(-50%)'
         break
-      // ... остальные кейсы
+      
       case 'left':
         style.top = targetRect.top + targetRect.height / 2
         style.right = window.innerWidth - targetRect.left + padding
@@ -69,7 +82,7 @@ export default function TourTooltip({
         style.transform = 'translateX(-50%)'
         break
       
-      default:
+      default: // Center
         style.top = '50%'
         style.left = '50%'
         style.transform = 'translate(-50%, -50%)'
@@ -78,86 +91,86 @@ export default function TourTooltip({
     return style
   }
 
-  // ... (getArrowClass оставляем)
+  // Стрелочка (только для десктопа)
   const getArrowClass = () => {
-    // ... ваш код
     switch (position) {
-      case 'right':
-        return 'absolute -left-2 top-1/2 -translate-y-1/2 border-l-2 border-b-2'
-      case 'left':
-        return 'absolute -right-2 top-1/2 -translate-y-1/2 border-r-2 border-t-2'
-      case 'bottom':
-        return 'absolute -top-2 left-1/2 -translate-x-1/2 border-l-2 border-t-2'
-      case 'top':
-        return 'absolute -bottom-2 left-1/2 -translate-x-1/2 border-r-2 border-b-2'
-      default:
-        return 'hidden'
+      case 'right': return 'absolute -left-2 top-1/2 -translate-y-1/2 border-l-2 border-b-2'
+      case 'left': return 'absolute -right-2 top-1/2 -translate-y-1/2 border-r-2 border-t-2'
+      case 'bottom': return 'absolute -top-2 left-1/2 -translate-x-1/2 border-l-2 border-t-2'
+      case 'top': return 'absolute -bottom-2 left-1/2 -translate-x-1/2 border-r-2 border-b-2'
+      default: return 'hidden'
     }
   }
 
   return (
     <div
-      // ❌ УДАЛИТЕ ref={tooltipRef}
-      // ref={tooltipRef} 
-      className="z-[60] w-[360px] max-w-[90vw] bg-surface border-2 border-primary/30 rounded-2xl shadow-glow-pink-lg"
-      style={getTooltipStyle()}
+      className="bg-surface border-2 border-primary/30 rounded-2xl shadow-glow-pink-lg transition-all duration-300"
+      style={{
+        ...getTooltipStyle(),
+        width: isMobile ? 'auto' : '360px' // На десктопе фикс ширина
+      }}
     >
-      {/* Остальной JSX код без изменений */}
-      <div className={`w-4 h-4 bg-surface border-primary/30 rotate-45 ${getArrowClass()}`} />
-      
+      {/* Стрелочку рисуем только на компьютере */}
+      {!isMobile && (
+        <div className={`w-4 h-4 bg-surface border-primary/30 rotate-45 ${getArrowClass()}`} />
+      )}
+
       <div className="p-6">
-         {/* ... контент ... */}
-         <div className="flex items-start justify-between mb-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-navigo font-semibold text-primary">
-                  Шаг {currentStep + 1} из {totalSteps}
-                </span>
-              </div>
-              <h3 className="text-xl font-coolvetica text-text-primary">
-                {title}
-              </h3>
+        {/* Заголовок и крестик */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-navigo font-semibold text-primary">
+                Шаг {currentStep + 1} из {totalSteps}
+              </span>
             </div>
+            <h3 className="text-xl font-coolvetica text-text-primary pr-2">
+              {title}
+            </h3>
+          </div>
+          <button
+            onClick={onSkip}
+            className="p-1.5 rounded-lg hover:bg-surface-light transition-colors flex-shrink-0"
+          >
+            <IconX size={18} className="text-text-tertiary" />
+          </button>
+        </div>
+
+        {/* Описание */}
+        <p className="text-text-secondary font-navigo text-sm leading-relaxed mb-6">
+          {description}
+        </p>
+
+        {/* Прогресс бар */}
+        <div className="h-1.5 bg-surface-light rounded-full overflow-hidden mb-6">
+          <div
+            className="h-full bg-gradient-to-r from-primary to-primary-light transition-all duration-500"
+            style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
+          />
+        </div>
+
+        {/* Кнопки навигации */}
+        <div className="flex items-center justify-between gap-3">
+          {currentStep > 0 ? (
             <button
-              onClick={onSkip}
-              className="p-1.5 rounded-lg hover:bg-surface-light transition-colors flex-shrink-0"
+              onClick={onPrev}
+              className="flex items-center gap-2 px-4 py-3 rounded-full border border-border hover:bg-surface-light transition-colors font-navigo text-sm text-text-primary"
             >
-              <IconX size={18} className="text-text-tertiary" />
+              <IconArrowLeft size={16} />
+              <span className="hidden xs:inline">Назад</span>
             </button>
-          </div>
+          ) : (
+            <div />
+          )}
 
-          <p className="text-text-secondary font-navigo text-sm leading-relaxed mb-6">
-            {description}
-          </p>
-
-          <div className="h-1.5 bg-surface-light rounded-full overflow-hidden mb-6">
-            <div
-              className="h-full bg-gradient-to-r from-primary to-primary-light transition-all duration-500"
-              style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
-            />
-          </div>
-
-          <div className="flex items-center justify-between gap-3">
-            {currentStep > 0 ? (
-              <button
-                onClick={onPrev}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-border hover:bg-surface-light transition-colors font-navigo text-sm text-text-primary"
-              >
-                <IconArrowLeft size={16} />
-                Назад
-              </button>
-            ) : (
-              <div />
-            )}
-
-            <button
-              onClick={onNext}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white font-navigo font-semibold text-sm transition-all shadow-glow-pink active:scale-95"
-            >
-              {currentStep === totalSteps - 1 ? 'Завершить' : 'Дальше'}
-              {currentStep < totalSteps - 1 && <IconArrowRight size={16} />}
-            </button>
-          </div>
+          <button
+            onClick={onNext}
+            className="flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white font-navigo font-semibold text-sm transition-all shadow-glow-pink active:scale-95"
+          >
+            {currentStep === totalSteps - 1 ? 'Завершить' : 'Дальше'}
+            {currentStep < totalSteps - 1 && <IconArrowRight size={16} />}
+          </button>
+        </div>
       </div>
     </div>
   )
