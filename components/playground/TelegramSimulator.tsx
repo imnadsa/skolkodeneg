@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { IconSend } from '@tabler/icons-react'
+import { IconSend, IconCheckbox } from '@tabler/icons-react'
 import Image from 'next/image'
 import { usePlayground } from '@/lib/playground-store'
 import { parseTransaction, isCategoriesCommand, isHelpCommand } from '@/lib/transaction-parser'
@@ -17,21 +17,56 @@ interface Message {
   buttons?: { text: string; icon?: string; action: string }[]
 }
 
+// Шаги онбординга
+const ONBOARDING_STEPS = [
+  {
+    step: 0,
+    title: 'Знакомство',
+    message: 'Привет! 👋 Я бот "Сколько Денег".\n\nДавайте я покажу как со мной работать!',
+    buttons: [
+      { text: '🚀 Начать обучение', action: 'start_tutorial' },
+      { text: '⏭️ Пропустить', action: 'skip_tutorial' },
+    ]
+  },
+  {
+    step: 1,
+    title: 'Формат команды',
+    message: '📝 Чтобы добавить транзакцию, напишите:\n\n<сумма> <категория> <счёт> [примечание]\n\nНапример:\n💬 5000 зп нал Петров',
+    buttons: [
+      { text: '✅ Понятно, дальше', action: 'next_step' },
+      { text: '📊 Показать категории', action: 'show_all_categories' },
+    ]
+  },
+  {
+    step: 2,
+    title: 'Попробуйте сами',
+    message: '🎯 Отлично! Теперь попробуйте сами.\n\nДобавьте расход на зарплату:\n💬 Напишите: 5000 зп нал',
+    buttons: []
+  },
+  {
+    step: 3,
+    title: 'Готово!',
+    message: '🎉 Отлично! Вы добавили первую транзакцию!\n\nТеперь вы можете:\n• Смотреть категории\n• Добавлять свои транзакции\n• Следить за балансом',
+    buttons: [
+      { text: '📊 Категории расходов', action: 'show_expenses' },
+      { text: '💰 Категории доходов', action: 'show_income' },
+      { text: '🏦 Счета бизнеса', action: 'show_accounts' },
+      { text: 'ℹ️ Помощь', action: 'help' },
+    ]
+  }
+]
+
 export default function TelegramSimulator() {
   const [input, setInput] = useState('')
   const [onboardingStep, setOnboardingStep] = useState(0)
+  const [showOnboarding, setShowOnboarding] = useState(true)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
-      text: 'Привет! 👋 Я бот "Сколько Денег".\n\nДавайте я покажу как со мной работать!',
+      text: ONBOARDING_STEPS[0].message,
       sender: 'bot',
       timestamp: new Date(),
-      buttons: [
-        { text: '📊 Категории расходов', action: 'show_expenses' },
-        { text: '💰 Категории доходов', action: 'show_income' },
-        { text: '🏦 Счета бизнеса', action: 'show_accounts' },
-        { text: 'ℹ️ Помощь', action: 'help' },
-      ]
+      buttons: ONBOARDING_STEPS[0].buttons
     }
   ])
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -138,7 +173,7 @@ export default function TelegramSimulator() {
       <div className="flex items-center gap-3 pb-4 border-b border-border">
         <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-surface-light border-2 border-primary/30">
           <Image
-            src="/logo-12.png"
+            src="/logo.png"
             alt="Сколько Денег"
             width={48}
             height={48}
