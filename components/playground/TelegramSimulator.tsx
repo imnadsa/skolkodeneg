@@ -91,7 +91,27 @@ export default function TelegramSimulator() {
   }
 
   const handleButtonClick = (action: string) => {
-    if (action === 'show_expenses') {
+    if (action === 'start_tutorial') {
+      setOnboardingStep(1)
+      const step = ONBOARDING_STEPS[1]
+      setTimeout(() => addMessage(step.message, 'bot', step.buttons), 300)
+    } else if (action === 'skip_tutorial') {
+      setShowOnboarding(false)
+      setOnboardingStep(3)
+      setTimeout(() => addMessage(ONBOARDING_STEPS[3].message, 'bot', ONBOARDING_STEPS[3].buttons), 300)
+    } else if (action === 'next_step') {
+      if (onboardingStep === 1) {
+        setOnboardingStep(2)
+        const step = ONBOARDING_STEPS[2]
+        setTimeout(() => addMessage(step.message, 'bot', step.buttons), 300)
+      }
+    } else if (action === 'show_all_categories') {
+      const expenseList = EXPENSE_CATEGORIES.map(c => `• ${c.name}`).join('\n')
+      const incomeList = INCOME_CATEGORIES.map(c => `• ${c.name}`).join('\n')
+      addMessage(`📤 РАСХОДЫ:\n${expenseList}\n\n📥 ДОХОДЫ:\n${incomeList}`, 'bot', [
+        { text: '✅ Понятно, дальше', action: 'next_step' }
+      ])
+    } else if (action === 'show_expenses') {
       const expenseList = EXPENSE_CATEGORIES.map(c => `• ${c.name}`).join('\n')
       addMessage('📤 Категории расходов:\n\n' + expenseList, 'bot')
     } else if (action === 'show_income') {
@@ -107,12 +127,6 @@ export default function TelegramSimulator() {
           { text: '📊 Категории расходов', action: 'show_expenses' },
           { text: '💰 Категории доходов', action: 'show_income' },
         ]
-      )
-    } else if (action === 'start_tutorial') {
-      setOnboardingStep(1)
-      addMessage(
-        '🎓 Отлично! Давайте попробуем добавить первую транзакцию.\n\nНапример, зарплата сотруднику:\n\n💬 Напишите: 5000 зп нал',
-        'bot'
       )
     }
   }
@@ -133,8 +147,8 @@ export default function TelegramSimulator() {
       }, 300)
     } else if (isCategoriesCommand(input)) {
       setTimeout(() => {
-        const incomeList = INCOME_CATEGORIES.map(c => `${c.emoji} ${c.name}`).join('\n')
-        const expenseList = EXPENSE_CATEGORIES.map(c => `${c.emoji} ${c.name}`).join('\n')
+        const incomeList = INCOME_CATEGORIES.map(c => `${c.name}`).join('\n')
+        const expenseList = EXPENSE_CATEGORIES.map(c => `${c.name}`).join('\n')
         addMessage(
           `📥 ДОХОДЫ:\n${incomeList}\n\n📤 РАСХОДЫ:\n${expenseList}`,
           'bot'
@@ -147,10 +161,22 @@ export default function TelegramSimulator() {
       setTimeout(() => {
         if (result.success && result.transaction) {
           addTransaction(result.transaction)
-          addMessage(
-            `✅ Записано!\n\n${result.transaction.type === 'income' ? '📥' : '📤'} ${result.transaction.category}\n💰 ${result.transaction.amount.toLocaleString('ru-RU')}₽\n🏦 ${result.transaction.account === 'cash' ? 'Наличные' : 'Карта'}${result.transaction.note ? `\n📝 ${result.transaction.note}` : ''}`,
-            'bot'
-          )
+          
+          // Если онбординг на шаге 2 (попробуйте сами) и команда правильная
+          if (onboardingStep === 2 && showOnboarding) {
+            setOnboardingStep(3)
+            setShowOnboarding(false)
+            addMessage(
+              `✅ Записано!\n\n${result.transaction.type === 'income' ? '📥' : '📤'} ${result.transaction.category}\n💰 ${result.transaction.amount.toLocaleString('ru-RU')}₽\n🏦 ${result.transaction.account === 'cash' ? 'Наличные' : 'Карта'}${result.transaction.note ? `\n📝 ${result.transaction.note}` : ''}`,
+              'bot'
+            )
+            setTimeout(() => addMessage(ONBOARDING_STEPS[3].message, 'bot', ONBOARDING_STEPS[3].buttons), 1000)
+          } else {
+            addMessage(
+              `✅ Записано!\n\n${result.transaction.type === 'income' ? '📥' : '📤'} ${result.transaction.category}\n💰 ${result.transaction.amount.toLocaleString('ru-RU')}₽\n🏦 ${result.transaction.account === 'cash' ? 'Наличные' : 'Карта'}${result.transaction.note ? `\n📝 ${result.transaction.note}` : ''}`,
+              'bot'
+            )
+          }
         } else {
           addMessage(`❌ ${result.error}\n\nНапишите "помощь" для примеров`, 'bot')
         }
@@ -170,23 +196,45 @@ export default function TelegramSimulator() {
   return (
     <Card className="flex flex-col h-[600px]">
       {/* Шапка чата */}
-      <div className="flex items-center gap-3 pb-4 border-b border-border">
-        <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-surface-light border-2 border-primary/30">
-          <Image
-            src="/logo.png"
-            alt="Сколько Денег"
-            width={48}
-            height={48}
-            className="w-full h-full object-cover"
-          />
+      <div className="pb-4 border-b border-border">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 bg-surface-light border-2 border-primary/30">
+            <Image
+              src="/logo-12.png"
+              alt="Сколько Денег"
+              width={48}
+              height={48}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex-1">
+            <p className="font-semibold text-lg font-coolvetica text-text-primary">Сколько Денег</p>
+            <p className="text-xs text-success flex items-center gap-1">
+              <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
+              онлайн
+            </p>
+          </div>
         </div>
-        <div>
-          <p className="font-semibold text-lg font-coolvetica text-text-primary">Сколько Денег</p>
-          <p className="text-xs text-success flex items-center gap-1">
-            <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
-            онлайн
-          </p>
-        </div>
+        
+        {/* Прогресс-бар онбординга */}
+        {showOnboarding && onboardingStep < 3 && (
+          <div className="mt-3">
+            <div className="flex items-center justify-between mb-1">
+              <p className="text-xs text-text-secondary font-navigo">
+                {ONBOARDING_STEPS[onboardingStep]?.title}
+              </p>
+              <p className="text-xs text-primary font-navigo font-semibold">
+                {onboardingStep + 1}/4
+              </p>
+            </div>
+            <div className="h-1.5 bg-surface-light rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-primary to-primary-light transition-all duration-500 rounded-full"
+                style={{ width: `${((onboardingStep + 1) / 4) * 100}%` }}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Сообщения */}
