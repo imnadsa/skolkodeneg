@@ -12,17 +12,43 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Темная тема (по умолчанию) */
+:root,
+.dark {
+  --background: #1A1A1E;
+  --background-alt: #252529;
+  --surface: #2A2A2F;
+  --surface-light: #333337;
+  --border: #333337;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B4B4B8;
+  --text-tertiary: #808087;
+}
+
+/* Светлая тема */
+.light {
+  --background: #FAFAFA;
+  --background-alt: #F5F5F7;
+  --surface: #FFFFFF;
+  --surface-light: #F8F8F8;
+  --border: #E5E5E5;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --text-tertiary: #999999;
+}
+
 body {
   font-family: var(--font-navigo);
-  background-color: #1A1A1E;
-  color: #FFFFFF;
+  background-color: var(--background);
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-coolvetica);
-  color: #FFFFFF;
+  color: var(--text-primary);
 }
 
 /* Кастомный scrollbar для темной темы */
@@ -32,11 +58,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: #252529;
+  background: var(--background-alt);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333337;
+  background: var(--surface-light);
   border-radius: 4px;
 }
 
