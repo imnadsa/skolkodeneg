@@ -16,7 +16,7 @@ export default function TransactionsTable() {
   ).slice(0, 10) // Показываем последние 10
 
   return (
-    <Card>
+    <Card className="tour-table">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <IconTable size={20} className="text-success" stroke={2} />
