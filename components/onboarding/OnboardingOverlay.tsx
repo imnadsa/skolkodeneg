@@ -85,6 +85,10 @@ export default function OnboardingOverlay({ onComplete }: OnboardingOverlayProps
   const handleCloseCompletion = () => {
     setShowCompletion(false)
     localStorage.setItem(TOUR_STORAGE_KEY, 'true')
+    
+    // Отправляем событие что тур завершён
+    window.dispatchEvent(new Event('main-tour-completed'))
+    
     onComplete?.()
   }
 
