@@ -36,7 +36,7 @@ export default function StatsCards() {
   ]
 
   return (
-    <Card>
+    <Card className="tour-stats">
       <h3 className="text-lg font-coolvetica text-text-primary mb-4">Финансовые показатели</h3>
       
       <div className="grid grid-cols-2 gap-4">
