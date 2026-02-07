@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { IconSend, IconRobot, IconFolders, IconCreditCard } from '@tabler/icons-react'
+import Image from 'next/image' // Импорт Image
 import { usePlayground } from '@/lib/playground-store'
 import { parseTransaction, isCategoriesCommand, isHelpCommand } from '@/lib/transaction-parser'
 import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '@/lib/categories'
@@ -22,7 +23,6 @@ const TG_COLORS = {
   botMsg: '#182533',      // Сообщение бота
   text: '#FFFFFF',        // Текст
   accent: '#5288C1',      // Акцент (кнопка отправки)
-  border: '#0E1621'       // Границы
 }
 
 // Шаги онбординга
@@ -55,7 +55,7 @@ export default function TelegramSimulator() {
     }])
   }, [])
 
-  // 2. Локальный скролл (Fix Page Jump)
+  // 2. Локальный скролл
   useEffect(() => {
     if (messagesContainerRef.current) {
       const container = messagesContainerRef.current
@@ -88,7 +88,6 @@ export default function TelegramSimulator() {
   }
 
   const handleButtonClick = (action: string) => {
-    // 1. Сначала показываем, что нажал юзер
     let userText = ''
     switch(action) {
       case 'show_categories': userText = '📂 Категории'; break;
@@ -96,19 +95,18 @@ export default function TelegramSimulator() {
     }
     addMessage(userText, 'user')
 
-    // 2. Ответ бота
     setTimeout(() => {
       if (action === 'show_categories') {
-        // Формируем единый список
         const incomeList = INCOME_CATEGORIES.map(c => `• ${c.name}`).join('\n')
         const expenseList = EXPENSE_CATEGORIES.map(c => `• ${c.name}`).join('\n')
         
+        // Убрал ** (markdown), чтобы текст выглядел чище, если нет парсера
         addMessage(
-          `📉 **РАСХОДЫ:**\n${expenseList}\n\n➖➖➖➖➖➖\n\n📈 **ДОХОДЫ:**\n${incomeList}`, 
+          `📉 РАСХОДЫ:\n${expenseList}\n\n➖➖➖➖➖➖\n\n📈 ДОХОДЫ:\n${incomeList}`, 
           'bot'
         )
       } else if (action === 'show_accounts') {
-        addMessage('💳 **СЧЕТА БИЗНЕСА:**\n\n• Наличные (нал)\n• Карта (безнал, карта, б/н)', 'bot')
+        addMessage('💳 СЧЕТА БИЗНЕСА:\n\n• Наличные (нал)\n• Карта (безнал, карта, б/н)', 'bot')
       }
     }, 400)
   }
@@ -116,12 +114,10 @@ export default function TelegramSimulator() {
   const handleSend = () => {
     if (!input.trim()) return
 
-    // Добавляем сообщение юзера
     addMessage(input, 'user')
     const currentInput = input
     setInput('')
 
-    // Логика ответа
     setTimeout(() => {
       if (isHelpCommand(currentInput)) {
         addMessage('ℹ️ Формат:\n<сумма> <категория> <счёт>\n\nПример: 5000 зп нал', 'bot')
@@ -133,11 +129,10 @@ export default function TelegramSimulator() {
         if (result.success && result.transaction) {
           addTransaction(result.transaction)
           addMessage(
-            `✅ **Сохранено!**\n\n💰 ${result.transaction.amount.toLocaleString()}₽\n📂 ${result.transaction.category}\n💳 ${result.transaction.account === 'cash' ? 'Наличные' : 'Карта'}`,
+            `✅ Сохранено!\n\n💰 ${result.transaction.amount.toLocaleString()}₽\n📂 ${result.transaction.category}\n💳 ${result.transaction.account === 'cash' ? 'Наличные' : 'Карта'}`,
             'bot'
           )
           
-          // Логика онбординга
           if (botOnboardingActive && botOnboardingStep < 2) {
              const nextStep = botOnboardingStep + 1
              setBotOnboardingStep(nextStep)
@@ -158,7 +153,6 @@ export default function TelegramSimulator() {
     }
   }
 
-  // Компонент кнопки клавиатуры
   const KeyboardButton = ({ text, icon: Icon, action }: any) => (
     <button
       onClick={() => handleButtonClick(action)}
@@ -170,9 +164,12 @@ export default function TelegramSimulator() {
   )
 
   return (
-    <Card className="flex flex-col h-[650px] relative overflow-hidden p-0 border-none shadow-2xl" style={{ backgroundColor: TG_COLORS.bg }}>
+    <Card 
+      // 1. Добавил border-white/10 для внешней рамки
+      className="flex flex-col h-[650px] relative overflow-hidden p-0 border border-white/10 shadow-2xl" 
+      style={{ backgroundColor: TG_COLORS.bg }}
+    >
       
-      {/* Фоновый паттерн Telegram */}
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://web.telegram.org/img/bg_0.png')] bg-repeat" />
 
       {/* Оверлей запуска обучения */}
@@ -193,16 +190,22 @@ export default function TelegramSimulator() {
         </div>
       )}
 
-      {/* 1. Header (Шапка) */}
+      {/* Header */}
       <div className="relative z-10 px-4 py-3 flex items-center gap-4 shadow-md" style={{ backgroundColor: TG_COLORS.surface }}>
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FF0084] to-[#FF4DA6] flex items-center justify-center text-white font-bold text-lg">
-          СД
+        {/* 3. Логотип из файла */}
+        <div className="w-10 h-10 rounded-full overflow-hidden relative border border-white/10">
+          <Image 
+            src="/logo-12.png" 
+            alt="Лого" 
+            fill
+            className="object-cover"
+          />
         </div>
+        
         <div className="flex-1">
           <p className="text-white font-bold text-base leading-none mb-1">Сколько Денег</p>
           <p className="text-[#5288C1] text-xs">бот</p>
         </div>
-        {/* Индикатор обучения */}
         {botOnboardingActive && (
           <div className="bg-[#5288C1]/10 px-2 py-1 rounded text-xs text-[#5288C1] font-mono">
             {botOnboardingStep + 1}/3
@@ -210,7 +213,7 @@ export default function TelegramSimulator() {
         )}
       </div>
 
-      {/* 2. Messages List (Список сообщений) */}
+      {/* Messages */}
       <div 
         ref={messagesContainerRef}
         className="flex-1 overflow-y-auto p-4 space-y-3 relative z-10 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
@@ -235,10 +238,10 @@ export default function TelegramSimulator() {
         ))}
       </div>
 
-      {/* 3. Keyboard & Input (Клавиатура и ввод) */}
+      {/* Footer */}
       <div className="relative z-20" style={{ backgroundColor: TG_COLORS.surface }}>
         
-        {/* 2 Кнопки - СТРОГО 2 */}
+        {/* Кнопки */}
         <div className="px-2 pt-2 pb-2 grid grid-cols-2 gap-2">
           <KeyboardButton text="Категории" icon={IconFolders} action="show_categories" />
           <KeyboardButton text="Счета" icon={IconCreditCard} action="show_accounts" />
@@ -246,14 +249,21 @@ export default function TelegramSimulator() {
 
         {/* Input Area */}
         <div className="p-3 pt-1 flex gap-3 items-end border-t border-black/10">
-          <div className="flex-1 bg-[#0E1621] rounded-2xl flex items-center min-h-[48px] border border-transparent focus-within:border-[#5288C1] transition-colors">
+          {/* 
+             2. ИНПУТ:
+             - border-transparent по умолчанию
+             - focus-within:border-[#5288C1]/30 (очень тонкая и прозрачная обводка, еле заметная)
+             - focus-within:bg-black/20 (немного затемняем фон при фокусе, как в ТГ)
+          */}
+          <div className="flex-1 bg-[#0E1621] rounded-2xl flex items-center min-h-[48px] border border-transparent focus-within:border-[#5288C1]/30 focus-within:bg-black/20 transition-all duration-200">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Сообщение..."
-              className="w-full bg-transparent border-none text-white px-4 py-2 focus:ring-0 placeholder:text-[#7F91A4] font-navigo"
+              // Убираем outline и ring
+              className="w-full bg-transparent border-none text-white px-4 py-2 focus:ring-0 focus:outline-none placeholder:text-[#7F91A4] font-navigo"
             />
           </div>
           
