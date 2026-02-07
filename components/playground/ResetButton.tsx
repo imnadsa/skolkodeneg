@@ -14,14 +14,16 @@ export default function ResetButton() {
   }
 
   return (
-    <Button
+    <div >
+      <Button
       variant="outline"
       size="sm"
       onClick={handleReset}
-      className="gap-2"
+      className="gap-2 tour-reset"
     >
       <IconRefresh size={16} stroke={2} />
       Сбросить к примеру
     </Button>
+    </div>
   )
 }
