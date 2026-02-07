@@ -8,10 +8,6 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 /* Темная тема (по умолчанию) */
 :root,
 .dark {
