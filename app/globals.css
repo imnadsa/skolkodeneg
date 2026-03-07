@@ -67,3 +67,12 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
   background: #FF0084;
 }
+
+
+@layer utilities {
+  .font-sofia-sans {
+    font-family: var(--font-sofia-sans), sans-serif;
+    /* Именно эта строчка включает "круглую" кириллицу (т -> m, п -> n) */
+    font-feature-settings: "locl" 1, "ss01" 1, "ss02" 1;
+  }
+}
