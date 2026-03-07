@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { coolvetica, daysOne, navigo } from "./fonts";
+import { daysOne, museoSans, sofiaSans } from "./fonts"; // Обновили импорт шрифтов
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-context";
 
@@ -14,7 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru" className={`dark ${coolvetica.variable} ${daysOne.variable} ${navigo.variable}`}>
+    // Заменили переменные старых шрифтов на новые
+    <html lang="ru" className={`dark ${daysOne.variable} ${museoSans.variable} ${sofiaSans.variable}`}>
       <body className="antialiased">
         <ThemeProvider>
           {children}
