@@ -2,128 +2,180 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowLeft, ArrowRight, BarChart, BookOpen, Clock, FileText, Banknote, History } from 'lucide-react'
+
+// ДАННЫЕ ДЛЯ ВСЕХ СЛАЙДОВ
+const slidesData = [
+  {
+    tabTitle: "Внесение\nтранзакции",
+    icon: <TransactionIcon />,
+    title: "Вносите транзакции за 10 секунд",
+    description: "Удобнейший Telegram/Max бот для внесения транзакций любой категории. Готовые категории расходов, с возможностью настройки категорий под себя внутри бота.",
+    descriptionSofia: "Не нужно зависеть от интерфейса различных сервисов! Все в удобном мессенджере.",
+    imageSrc: "/integration1.png",
+  },
+  {
+    tabTitle: "Считайте\nмаржу",
+    icon: <BarChart size={64} className="text-white" />,
+    title: "Считайте маржу как финансист, но лучше",
+    description: "Самый удобный калькулятор маржи на рынке финансовых программ. Интуитивно понятный интерфейс, быстрое обучение, готовые техкарты, удобнейшая сводка.",
+    descriptionSofia: "Отзыв клиента: “Даже мой 9 летний сын смог посчитать маржу в вашей программе”",
+    imageSrc: "/feature-2.png",
+  },
+  {
+    tabTitle: "Сводка услуг",
+    icon: <FileText size={64} className="text-white" />,
+    title: "Держите руку на пульсе, смотрите динамику",
+    description: "Сводка услуг позволяет отслеживать динамику изменений цен на услуги и держать руку на пульсе, если что-то не так. Больше не придется раз в 3 месяца пересчитывать прайс услуг в клинике, сводка делает это еще удобнее!",
+    descriptionSofia: "All in one place (Всё в одном месте)",
+    imageSrc: "/feature-3.png",
+  },
+  {
+    tabTitle: "Обязательства",
+    icon: <BookOpen size={64} className="text-white" />,
+    title: "Создавайте и погашайте обязательства",
+    description: "Телеграм боты и ведите учет ваших обязательств. Это будет отображаться внутри учета ДДС.",
+    descriptionSofia: "Но мы вам желаем, чтобы вы не были никому должны!",
+    imageSrc: "/feature-4.png",
+  },
+  {
+    tabTitle: "История\nтранзакций",
+    icon: <History size={64} className="text-white" />,
+    title: "Отслеживайте историю операций клиники",
+    description: "Мы можете раз в день отслеживать историю транзакций, которую вносят ваши сотрудники. Фильтруйте категории, даты, доход/расходы и держите руку на пульсе.",
+    descriptionSofia: "All in one place (Всё в одном месте)",
+    imageSrc: "/feature-5.png",
+  },
+  {
+    tabTitle: "Интеграция с\nбанками",
+    icon: <Banknote size={64} className="text-white" />,
+    title: "Интеграция со всеми банками РФ.",
+    description: "Автоматизируйте процесс внесения онлайн-операций интеграцией с удобным банком. Все операции будут автоматически подгружаться в сервис, и создавайте авто-правила.",
+    descriptionSofia: "СКОРО",
+    imageSrc: "/feature-6.png",
+  },
+];
+
 
 export default function FeaturesSlider() {
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeSlide, setActiveSlide] = useState(0)
 
-  const tabs = [
-    "Внесение\nтранзакции",
-    "Считайте\nмаржу",
-    "Сводка услуг"
-  ]
+  const handleNext = () => {
+    setActiveSlide((prev) => (prev + 1) % slidesData.length);
+  };
 
+  const handlePrev = () => {
+    setActiveSlide((prev) => (prev - 1 + slidesData.length) % slidesData.length);
+  };
+  
   return (
     <section className="py-12 lg:py-20 bg-white">
-      {/* Исправил ширину контейнера. Был max-w-[1000px], стал широкий max-w-[1440px] */}
-      <div className="container mx-auto px-4 md:px-6 max-w-[1440px]">
-        
-        {/* Фиолетовый блок */}
-        <div className="bg-[#8547FF] rounded-[32px] md:rounded-[48px] p-6 pt-10 md:p-12 lg:p-16 flex flex-col items-center shadow-2xl overflow-hidden min-h-[600px] md:min-h-[700px] justify-start relative">
+      <div className="container mx-auto px-0 md:px-6 max-w-[1440px]">
+        <div className="bg-[#8547FF] rounded-t-[32px] md:rounded-[48px] px-6 pt-10 md:pt-12 lg:pt-16 flex flex-col items-center shadow-2xl overflow-hidden relative">
           
-          {/* Заголовок блока */}
           <h2 className="text-center text-white text-[32px] md:text-[48px] lg:text-[56px] leading-[1.1] mb-8 md:mb-12 max-w-4xl mx-auto z-10">
             <span className="font-museo-sans font-medium">Все </span>
             <span className="font-sofia-sans">возможности</span><br className="hidden md:block" />
             <span className="font-museo-sans font-medium"> сервиса "Сколько денег"</span>
           </h2>
 
-          {/* Переключатель табов */}
-          <div className="flex w-full max-w-[800px] bg-white rounded-2xl md:rounded-full overflow-hidden mb-10 md:mb-14 shadow-lg flex-col md:flex-row z-10">
-            {tabs.map((tab, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveTab(index)}
-                className={`
-                  flex-1 py-4 md:py-5 px-4 text-center text-base md:text-[20px] font-museo-sans font-medium transition-all duration-300 whitespace-pre-line leading-tight
-                  ${activeTab === index 
-                    ? 'bg-primary text-white' 
-                    : 'bg-white text-[#141414] hover:bg-gray-50'
-                  }
-                `}
+          {/* Горизонтально-скроллящиеся табы */}
+          <div className="w-full max-w-full z-10 mb-10 md:mb-14">
+            <div className="flex space-x-2 overflow-x-auto pb-4 px-4 -mx-4 no-scrollbar">
+              {slidesData.map((slide, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveSlide(index)}
+                  className={`
+                    shrink-0 py-3 px-5 rounded-full text-base font-museo-sans font-medium transition-all duration-300 whitespace-pre-line leading-tight
+                    ${activeSlide === index
+                      ? 'bg-primary text-white shadow-md'
+                      : 'bg-white/90 text-[#141414] hover:bg-white'
+                    }
+                  `}
+                >
+                  {slide.tabTitle}
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Контейнер для слайдера */}
+          <div className="w-full relative">
+            {/* Навигационные стрелки (для десктопа) */}
+            <div className="hidden lg:flex justify-between absolute top-1/2 -translate-y-1/2 w-full left-0 px-2 z-20">
+                <button onClick={handlePrev} className="bg-white/20 hover:bg-white/40 text-white rounded-full p-3 transition-all">
+                  <ArrowLeft size={24}/>
+                </button>
+                <button onClick={handleNext} className="bg-white/20 hover:bg-white/40 text-white rounded-full p-3 transition-all">
+                  <ArrowRight size={24}/>
+                </button>
+            </div>
+
+            <div className="w-full overflow-hidden">
+              <motion.div
+                className="flex"
+                animate={{ x: `-${activeSlide * 100}%` }}
+                transition={{ type: 'spring', bounce: 0.1, duration: 0.8 }}
               >
-                {tab}
-              </button>
-            ))}
-          </div>
-
-          {/* КОНТЕНТ СЛАЙДОВ */}
-          <div className="w-full text-white max-w-[1100px] z-10 relative flex flex-col flex-grow">
-            
-            {/* СЛАЙД 1: Внесение транзакции */}
-            {activeTab === 0 && (
-              <div className="flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500 h-full">
-                
-                {/* Верхняя часть: Иконка + Заголовок */}
-                <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6 md:mb-10">
-                  <div className="shrink-0">
-                    <TransactionIcon />
+                {slidesData.map((slide, index) => (
+                  <div key={index} className="w-full shrink-0 px-2 md:px-6">
+                    <div className="flex flex-col text-white">
+                        <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6 md:mb-10 text-left">
+                            <div className="shrink-0 w-16 h-16 md:w-20 md:h-20">{slide.icon}</div>
+                            <h3 className="text-3xl md:text-[44px] lg:text-[50px] font-museo-sans font-medium leading-[1.1]">
+                                {slide.title}
+                            </h3>
+                        </div>
+                        <div className="max-w-4xl mb-8 md:mb-12 text-left">
+                            <p className="font-museo-sans text-lg md:text-[22px] leading-snug mb-6 text-white/90">{slide.description}</p>
+                            <p className="font-sofia-sans text-xl md:text-[24px] leading-snug text-white">{slide.descriptionSofia}</p>
+                        </div>
+                        <div className="relative w-full mt-auto flex justify-center">
+                            <div className="relative w-full max-w-[900px] rounded-t-[24px] md:rounded-t-[32px] overflow-hidden shadow-2xl border-t border-l border-r border-white/10 bg-[#1A2536]">
+                                <Image
+                                    src={slide.imageSrc}
+                                    alt={slide.title}
+                                    width={1000} height={700} quality={100}
+                                    className="w-full h-auto object-cover" priority
+                                />
+                            </div>
+                        </div>
+                    </div>
                   </div>
-                  <h3 className="text-3xl md:text-[44px] lg:text-[50px] font-museo-sans font-medium leading-[1.1]">
-                    Вносите транзакции<br className="hidden md:block" /> за 10 секунд
-                  </h3>
-                </div>
-
-                {/* Описание */}
-                <div className="max-w-4xl mb-8 md:mb-12">
-                  <p className="font-museo-sans text-lg md:text-[22px] leading-snug mb-6 text-white/95">
-                    Удобнейший Telegram/Max бот для внесения транзакций любой категории. Готовые категории расходов, с возможностью настройки категорий под себя внутри бота.
-                  </p>
-                  <p className="font-sofia-sans text-xl md:text-[24px] leading-snug text-white/95">
-                    Не нужно зависеть от интерфейса различных сервисов! Все в удобном мессенджере.
-                  </p>
-                </div>
-
-                {/* Картинка (теперь она внизу блока и по центру) */}
-                <div className="relative w-full mt-auto flex justify-center">
-                   {/* Блок для картинки с тенью */}
-                   <div className="relative w-full max-w-[800px] rounded-t-[24px] md:rounded-t-[32px] overflow-hidden shadow-2xl border-t border-l border-r border-white/10 bg-[#1A2536]">
-                      <Image
-                        src="/integration1.png"
-                        alt="Интерфейс Telegram бота"
-                        width={1000}
-                        height={700}
-                        quality={100}
-                        className="w-full h-auto object-cover"
-                        priority
-                      />
-                   </div>
-                </div>
-              </div>
-            )}
-
-            {/* Заглушки */}
-            {activeTab === 1 && (
-              <div className="text-center py-20 animate-in fade-in duration-500 font-museo-sans text-2xl">
-                Раздел в разработке
-              </div>
-            )}
-            {activeTab === 2 && (
-              <div className="text-center py-20 animate-in fade-in duration-500 font-museo-sans text-2xl">
-                Раздел в разработке
-              </div>
-            )}
-
+                ))}
+              </motion.div>
+            </div>
           </div>
-
         </div>
       </div>
     </section>
   )
 }
 
+// Иконка для первого слайда
 function TransactionIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 54 54" className="w-16 h-16 md:w-[80px] md:h-[80px]">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 54 54">
       <g fillRule="evenodd" clipPath="url(#a)" clipRule="evenodd">
         <path fill="#fff" d="M24.761 13.286a8.3 8.3 0 0 0-3.195-1.26 3.6 3.6 0 0 1-1.035-.36c-.27-.09-.27-.18-.27-.382-.405-1.935 3.083-1.328 3.915-.9a.65.65 0 0 0 .878-.203.675.675 0 0 0-.225-.877 7.4 7.4 0 0 0-1.35-.63 1.4 1.4 0 0 0 .18-.428v-1.62a.722.722 0 0 0-.747-.929.7.7 0 0 0-.603.502 10 10 0 0 0-.72.99q-.105.218-.18.45c-.03.163-.03.331 0 .495q-.017.135 0 .27a4.5 4.5 0 0 0-1.17.135 2.7 2.7 0 0 0-2.228 3.06 2.59 2.59 0 0 0 1.238 1.935c.963.517 1.991.895 3.06 1.125.495.157 1.035.202 1.035.787s-.63.923-1.305 1.058a4.5 4.5 0 0 1-2.768-.27 1.7 1.7 0 0 1-.63-.45 7 7 0 0 1-.63-.81.743.743 0 0 0-.967-.315.72.72 0 0 0-.293.967q.28.705.743 1.305c.42.529.994.914 1.642 1.103-.08.13-.134.276-.157.427q-.032.236 0 .473v1.147a.709.709 0 1 0 1.35.428q.402-.477.72-1.013a1.13 1.13 0 0 0 .202-.922c.61.054 1.224.016 1.823-.113a3.08 3.08 0 0 0 2.542-2.88 2.75 2.75 0 0 0-.855-2.295M23.141 35.2a3.06 3.06 0 0 0 2.543-2.857 2.7 2.7 0 0 0-.945-2.25 8.3 8.3 0 0 0-3.195-1.26 5.6 5.6 0 0 1-1.035-.36c-.158 0-.315-.18-.36-.383-.18-.787.337-1.192 1.012-1.305.986-.09 1.98.05 2.903.405a.63.63 0 0 0 .877-.225.653.653 0 0 0-.225-.855 7.4 7.4 0 0 0-1.35-.63c.085-.131.145-.276.18-.427v-1.62a.722.722 0 0 0-.747-.93.7.7 0 0 0-.603.502q-.39.473-.72.99a5 5 0 0 0-.18.45q-.045.247 0 .495-.015.135 0 .27a4.5 4.5 0 0 0-1.17.135 2.7 2.7 0 0 0-2.115 3.06 2.63 2.63 0 0 0 1.215 2.003c.963.517 1.992.895 3.06 1.125.495.134 1.035.202 1.035.787s-.63.922-1.305 1.057a4.5 4.5 0 0 1-2.767-.27 2 2 0 0 1-.63-.472 6.6 6.6 0 0 1-.608-.832.72.72 0 0 0-.877-.27.72.72 0 0 0-.293.967q.293.698.743 1.305.366.461.877.765.322.202.675.337c-.08.13-.134.276-.157.428q-.032.237 0 .472v1.148a.708.708 0 1 0 1.35.428 7.3 7.3 0 0 0 .72-1.013c.094-.136.163-.289.202-.45a1.1 1.1 0 0 0 0-.472 6.1 6.1 0 0 0 1.89-.248M36.82 15.107a.72.72 0 0 0-.428-.9 9.9 9.9 0 0 0-2.812-.968 6 6 0 0 0-1.26-.135 7.7 7.7 0 0 0-1.238 0 24 24 0 0 0-2.744.81.607.607 0 0 0-.518.697.63.63 0 0 0 .698.54c1.035 0 2.024.226 3.06.248h1.754c.896-.03 1.792.023 2.678.158a.675.675 0 0 0 .81-.45m-3.803 14.917a6 6 0 0 0-1.26-.135 8 8 0 0 0-1.237 0q-1.383.318-2.722.81a.63.63 0 0 0 .157 1.237c1.035 0 2.025.225 3.082.248h1.733a14.4 14.4 0 0 1 2.61 0 .72.72 0 0 0 .869-.997.68.68 0 0 0-.419-.353 9.7 9.7 0 0 0-2.812-.81"/>
         <path fill="#e3ffd9" d="M11.644 35.084c0 1.913.157 3.218.225 3.645a.606.606 0 0 0 .72.518.63.63 0 0 0 .517-.72c-.292-1.913-.112-23.376-.202-32.058V3.25c.495-.112 1.485-.18 2.25-.292a98 98 0 0 1 14.647-.45c3.202.011 6.393.374 9.516 1.08q.593.144 1.124.45.105.062.203.135c.9 3.24-.968 17.84-1.372 27.357-.161 2.37-.109 4.75.157 7.11a.7.7 0 0 0 .81.585.675.675 0 0 0 .585-.81c-.81-5.422 1.935-23.107 2.25-31.14a14.2 14.2 0 0 0-.315-3.802c-.248-.833-1.395-1.73-3.42-2.248A58.5 58.5 0 0 0 26.784.034a68 68 0 0 0-14.175 1.035 4.05 4.05 0 0 0-1.642.742 1.4 1.4 0 0 0-.448 1.35c.292 1.373.742 23.105 1.125 31.923"/>
         <path fill="#fff" d="M51.757 22.666a28 28 0 0 0-.923-5.782 4.95 4.95 0 0 0-1.485-2.61 2.25 2.25 0 0 0-1.44-.338c-.742 0-1.912.225-3.96.383a.63.63 0 0 0-.63.63.653.653 0 0 0 .653.607h3.487c.765 0 .72 0 .9.135s.428.855.585 1.688c.284 1.793.434 3.607.45 5.422 0 2.25.158 4.928.18 7.47v11.385l-19.617.36c-2.993 0-5.963.293-9 .383a58 58 0 0 1-5.85 0l-8.188-.293a14 14 0 0 1-1.508-.18 1.08 1.08 0 0 1-.675-.337 2 2 0 0 1-.225-1.058c0-.967.135-2.025 0-2.722l.113-12.218c0-1.71-.135-4.027-.113-6.255a22.6 22.6 0 0 1 .293-4.027 1.42 1.42 0 0 1 1.035-1.103 4.7 4.7 0 0 1 1.98 0 .652.652 0 0 0 .877-.675.63.63 0 0 0-.472-.742 5.63 5.63 0 0 0-3.195.18 2.61 2.61 0 0 0-1.485 1.89 24 24 0 0 0-.495 4.275c-.113 2.25 0 4.5-.113 6.277l-.675 12.285c0 .855-.247 2.25-.157 3.33.04.655.234 1.296.562 1.866.315.463.752.828 1.26 1.057a8 8 0 0 0 2.835.518c.833 0 1.665.135 2.498.18 1.89 0 3.757 0 5.647.112h4.5l3.105-.225c-.157.315-.315.608-.45.923-.72 1.575-1.372 3.172-2.092 4.747 0 .203-.765 1.418-.923 1.958a1.5 1.5 0 0 0 0 .967 1.3 1.3 0 0 0 .765.698q.423.101.855.157.617.035 1.238 0c.585 0 1.147 0 1.71-.157a52 52 0 0 1 6.165-.743c4.768-.247 5.577.9 4.497-3.892a14 14 0 0 0-.45-1.575 11 11 0 0 0-.63-1.485 25 25 0 0 0-1.282-2.25l17.595-.833a8.7 8.7 0 0 0 1.44-1.44c.293-2.587.878-7.965.968-13.23-.046-1.98-.16-3.937-.16-5.713m-20.56 24.748c.247.788.562 1.553.854 2.25l.743 1.733a36 36 0 0 0-4.118-.315c-1.777 0-3.555 0-5.355.247h-1.687c.18-.292.337-.54.36-.607.517-1.643.922-3.33 1.462-4.973q.25-.765.54-1.552c1.958-.158 3.915-.315 5.895-.428h.36c.225 1.373.495 2.543.878 3.735z"/>
       </g>
-      <defs>
-        <clipPath id="a">
-          <path fill="#fff" d="M0 0h54v54H0z"/>
-        </clipPath>
-      </defs>
+      <defs><clipPath id="a"><path fill="#fff" d="M0 0h54v54H0z"/></clipPath></defs>
     </svg>
   )
 }
+
+// Простая CSS-утилита чтобы скрыть скроллбар
+// Добавь это в globals.css, если еще нету
+/*
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+*/
