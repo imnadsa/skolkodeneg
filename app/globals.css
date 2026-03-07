@@ -8,7 +8,20 @@
   box-sizing: border-box;
 }
 
+/* Светлая тема (основная по макету) */
 :root,
+.light {
+  --background: #FFFFFF; /* Чисто белый фон по макету */
+  --background-alt: #F5F5F7;
+  --surface: #FFFFFF;
+  --surface-light: #F8F8F8;
+  --border: #E5E5E5;
+  --text-primary: #141414; /* Тот самый черный цвет из ТЗ */
+  --text-secondary: #6B6B6B;
+  --text-tertiary: #999999;
+}
+
+/* Темную тему оставляем как была, чтобы ничего не сломать в проекте */
 .dark {
   --background: #1A1A1E;
   --background-alt: #252529;
@@ -20,20 +33,9 @@
   --text-tertiary: #808087;
 }
 
-/* Светлая тема */
-.light {
-  --background: #FAFAFA;
-  --background-alt: #F5F5F7;
-  --surface: #FFFFFF;
-  --surface-light: #F8F8F8;
-  --border: #E5E5E5;
-  --text-primary: #1A1A1A;
-  --text-secondary: #6B6B6B;
-  --text-tertiary: #999999;
-}
-
 body {
-  font-family: var(--font-navigo);
+  /* Делаем Museo Sans основным шрифтом для текста (списки и т.д.) */
+  font-family: var(--font-museo-sans), sans-serif;
   background-color: var(--background);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -42,11 +44,12 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-coolvetica);
+  /* Заголовки по умолчанию делаем Days One */
+  font-family: var(--font-days-one), sans-serif;
   color: var(--text-primary);
 }
 
-/* Кастомный scrollbar для темной темы */
+/* Кастомный scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
