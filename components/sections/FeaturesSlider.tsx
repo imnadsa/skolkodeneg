@@ -4,10 +4,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 export default function FeaturesSlider() {
-  // Состояние для активного таба (0 - первый, 1 - второй, 2 - третий)
   const [activeTab, setActiveTab] = useState(0)
 
-  // Названия вкладок (используем \n для переноса строк как на макете)
   const tabs = [
     "Внесение\nтранзакции",
     "Считайте\nмаржу",
@@ -15,27 +13,28 @@ export default function FeaturesSlider() {
   ]
 
   return (
-    <section className="py-16 lg:py-24 bg-white">
-      <div className="container mx-auto px-4 lg:px-8 max-w-[1000px]">
+    <section className="py-12 lg:py-20 bg-white">
+      {/* Исправил ширину контейнера. Был max-w-[1000px], стал широкий max-w-[1440px] */}
+      <div className="container mx-auto px-4 md:px-6 max-w-[1440px]">
         
         {/* Фиолетовый блок */}
-        <div className="bg-[#8547FF] rounded-[40px] md:rounded-[60px] p-6 pt-12 md:p-14 lg:p-16 flex flex-col items-center shadow-xl">
+        <div className="bg-[#8547FF] rounded-[32px] md:rounded-[48px] p-6 pt-10 md:p-12 lg:p-16 flex flex-col items-center shadow-2xl overflow-hidden min-h-[600px] md:min-h-[700px] justify-start relative">
           
           {/* Заголовок блока */}
-          <h2 className="text-center text-white text-[32px] md:text-[44px] lg:text-[52px] leading-[1.1] mb-10 md:mb-14">
+          <h2 className="text-center text-white text-[32px] md:text-[48px] lg:text-[56px] leading-[1.1] mb-8 md:mb-12 max-w-4xl mx-auto z-10">
             <span className="font-museo-sans font-medium">Все </span>
             <span className="font-sofia-sans">возможности</span><br className="hidden md:block" />
             <span className="font-museo-sans font-medium"> сервиса "Сколько денег"</span>
           </h2>
 
           {/* Переключатель табов */}
-          <div className="flex w-full max-w-3xl bg-white rounded-2xl md:rounded-full overflow-hidden mb-12 shadow-md flex-col md:flex-row">
+          <div className="flex w-full max-w-[800px] bg-white rounded-2xl md:rounded-full overflow-hidden mb-10 md:mb-14 shadow-lg flex-col md:flex-row z-10">
             {tabs.map((tab, index) => (
               <button
                 key={index}
                 onClick={() => setActiveTab(index)}
                 className={`
-                  flex-1 py-4 px-2 text-center text-base md:text-[18px] font-museo-sans font-medium transition-all duration-300 whitespace-pre-line leading-tight
+                  flex-1 py-4 md:py-5 px-4 text-center text-base md:text-[20px] font-museo-sans font-medium transition-all duration-300 whitespace-pre-line leading-tight
                   ${activeTab === index 
                     ? 'bg-primary text-white' 
                     : 'bg-white text-[#141414] hover:bg-gray-50'
@@ -48,55 +47,59 @@ export default function FeaturesSlider() {
           </div>
 
           {/* КОНТЕНТ СЛАЙДОВ */}
-          <div className="w-full text-white">
+          <div className="w-full text-white max-w-[1100px] z-10 relative flex flex-col flex-grow">
             
             {/* СЛАЙД 1: Внесение транзакции */}
             {activeTab === 0 && (
-              <div className="flex flex-col animate-in fade-in duration-500">
+              <div className="flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500 h-full">
                 
-                {/* Иконка и Заголовок слайда */}
-                <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
+                {/* Верхняя часть: Иконка + Заголовок */}
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-6 md:mb-10">
                   <div className="shrink-0">
                     <TransactionIcon />
                   </div>
-                  <h3 className="text-3xl md:text-[40px] font-museo-sans font-medium leading-[1.1]">
+                  <h3 className="text-3xl md:text-[44px] lg:text-[50px] font-museo-sans font-medium leading-[1.1]">
                     Вносите транзакции<br className="hidden md:block" /> за 10 секунд
                   </h3>
                 </div>
 
-                {/* Текстовое описание */}
-                <div className="max-w-3xl mb-10">
-                  <p className="font-museo-sans text-lg md:text-[20px] leading-snug mb-6 text-white/95">
+                {/* Описание */}
+                <div className="max-w-4xl mb-8 md:mb-12">
+                  <p className="font-museo-sans text-lg md:text-[22px] leading-snug mb-6 text-white/95">
                     Удобнейший Telegram/Max бот для внесения транзакций любой категории. Готовые категории расходов, с возможностью настройки категорий под себя внутри бота.
                   </p>
-                  <p className="font-sofia-sans text-xl md:text-[22px] leading-snug text-white/95">
+                  <p className="font-sofia-sans text-xl md:text-[24px] leading-snug text-white/95">
                     Не нужно зависеть от интерфейса различных сервисов! Все в удобном мессенджере.
                   </p>
                 </div>
 
-                {/* Картинка */}
-                <div className="w-full mt-auto">
-                  <Image
-                    src="/integration1.png"
-                    alt="Интерфейс Telegram бота"
-                    width={900}
-                    height={600}
-                    quality={100}
-                    className="w-full h-auto rounded-[24px] md:rounded-[32px] shadow-2xl object-cover"
-                  />
+                {/* Картинка (теперь она внизу блока и по центру) */}
+                <div className="relative w-full mt-auto flex justify-center">
+                   {/* Блок для картинки с тенью */}
+                   <div className="relative w-full max-w-[800px] rounded-t-[24px] md:rounded-t-[32px] overflow-hidden shadow-2xl border-t border-l border-r border-white/10 bg-[#1A2536]">
+                      <Image
+                        src="/integration1.png"
+                        alt="Интерфейс Telegram бота"
+                        width={1000}
+                        height={700}
+                        quality={100}
+                        className="w-full h-auto object-cover"
+                        priority
+                      />
+                   </div>
                 </div>
               </div>
             )}
 
-            {/* Заглушки для будущих слайдов */}
+            {/* Заглушки */}
             {activeTab === 1 && (
               <div className="text-center py-20 animate-in fade-in duration-500 font-museo-sans text-2xl">
-                Контент для "Считайте маржу" (в разработке)
+                Раздел в разработке
               </div>
             )}
             {activeTab === 2 && (
               <div className="text-center py-20 animate-in fade-in duration-500 font-museo-sans text-2xl">
-                Контент для "Сводка услуг" (в разработке)
+                Раздел в разработке
               </div>
             )}
 
@@ -108,10 +111,9 @@ export default function FeaturesSlider() {
   )
 }
 
-// Компонент SVG иконки (переведенный в React JSX формат)
 function TransactionIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 54 54" className="w-16 h-16 md:w-[72px] md:h-[72px]">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 54 54" className="w-16 h-16 md:w-[80px] md:h-[80px]">
       <g fillRule="evenodd" clipPath="url(#a)" clipRule="evenodd">
         <path fill="#fff" d="M24.761 13.286a8.3 8.3 0 0 0-3.195-1.26 3.6 3.6 0 0 1-1.035-.36c-.27-.09-.27-.18-.27-.382-.405-1.935 3.083-1.328 3.915-.9a.65.65 0 0 0 .878-.203.675.675 0 0 0-.225-.877 7.4 7.4 0 0 0-1.35-.63 1.4 1.4 0 0 0 .18-.428v-1.62a.722.722 0 0 0-.747-.929.7.7 0 0 0-.603.502 10 10 0 0 0-.72.99q-.105.218-.18.45c-.03.163-.03.331 0 .495q-.017.135 0 .27a4.5 4.5 0 0 0-1.17.135 2.7 2.7 0 0 0-2.228 3.06 2.59 2.59 0 0 0 1.238 1.935c.963.517 1.991.895 3.06 1.125.495.157 1.035.202 1.035.787s-.63.923-1.305 1.058a4.5 4.5 0 0 1-2.768-.27 1.7 1.7 0 0 1-.63-.45 7 7 0 0 1-.63-.81.743.743 0 0 0-.967-.315.72.72 0 0 0-.293.967q.28.705.743 1.305c.42.529.994.914 1.642 1.103-.08.13-.134.276-.157.427q-.032.236 0 .473v1.147a.709.709 0 1 0 1.35.428q.402-.477.72-1.013a1.13 1.13 0 0 0 .202-.922c.61.054 1.224.016 1.823-.113a3.08 3.08 0 0 0 2.542-2.88 2.75 2.75 0 0 0-.855-2.295M23.141 35.2a3.06 3.06 0 0 0 2.543-2.857 2.7 2.7 0 0 0-.945-2.25 8.3 8.3 0 0 0-3.195-1.26 5.6 5.6 0 0 1-1.035-.36c-.158 0-.315-.18-.36-.383-.18-.787.337-1.192 1.012-1.305.986-.09 1.98.05 2.903.405a.63.63 0 0 0 .877-.225.653.653 0 0 0-.225-.855 7.4 7.4 0 0 0-1.35-.63c.085-.131.145-.276.18-.427v-1.62a.722.722 0 0 0-.747-.93.7.7 0 0 0-.603.502q-.39.473-.72.99a5 5 0 0 0-.18.45q-.045.247 0 .495-.015.135 0 .27a4.5 4.5 0 0 0-1.17.135 2.7 2.7 0 0 0-2.115 3.06 2.63 2.63 0 0 0 1.215 2.003c.963.517 1.992.895 3.06 1.125.495.134 1.035.202 1.035.787s-.63.922-1.305 1.057a4.5 4.5 0 0 1-2.767-.27 2 2 0 0 1-.63-.472 6.6 6.6 0 0 1-.608-.832.72.72 0 0 0-.877-.27.72.72 0 0 0-.293.967q.293.698.743 1.305.366.461.877.765.322.202.675.337c-.08.13-.134.276-.157.428q-.032.237 0 .472v1.148a.708.708 0 1 0 1.35.428 7.3 7.3 0 0 0 .72-1.013c.094-.136.163-.289.202-.45a1.1 1.1 0 0 0 0-.472 6.1 6.1 0 0 0 1.89-.248M36.82 15.107a.72.72 0 0 0-.428-.9 9.9 9.9 0 0 0-2.812-.968 6 6 0 0 0-1.26-.135 7.7 7.7 0 0 0-1.238 0 24 24 0 0 0-2.744.81.607.607 0 0 0-.518.697.63.63 0 0 0 .698.54c1.035 0 2.024.226 3.06.248h1.754c.896-.03 1.792.023 2.678.158a.675.675 0 0 0 .81-.45m-3.803 14.917a6 6 0 0 0-1.26-.135 8 8 0 0 0-1.237 0q-1.383.318-2.722.81a.63.63 0 0 0 .157 1.237c1.035 0 2.025.225 3.082.248h1.733a14.4 14.4 0 0 1 2.61 0 .72.72 0 0 0 .869-.997.68.68 0 0 0-.419-.353 9.7 9.7 0 0 0-2.812-.81"/>
         <path fill="#e3ffd9" d="M11.644 35.084c0 1.913.157 3.218.225 3.645a.606.606 0 0 0 .72.518.63.63 0 0 0 .517-.72c-.292-1.913-.112-23.376-.202-32.058V3.25c.495-.112 1.485-.18 2.25-.292a98 98 0 0 1 14.647-.45c3.202.011 6.393.374 9.516 1.08q.593.144 1.124.45.105.062.203.135c.9 3.24-.968 17.84-1.372 27.357-.161 2.37-.109 4.75.157 7.11a.7.7 0 0 0 .81.585.675.675 0 0 0 .585-.81c-.81-5.422 1.935-23.107 2.25-31.14a14.2 14.2 0 0 0-.315-3.802c-.248-.833-1.395-1.73-3.42-2.248A58.5 58.5 0 0 0 26.784.034a68 68 0 0 0-14.175 1.035 4.05 4.05 0 0 0-1.642.742 1.4 1.4 0 0 0-.448 1.35c.292 1.373.742 23.105 1.125 31.923"/>
