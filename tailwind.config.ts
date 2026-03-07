@@ -26,15 +26,14 @@ const config: Config = {
         border: "var(--border)",
       },
       fontFamily: {
-        coolvetica: ["var(--font-coolvetica)"],
         "days-one": ["var(--font-days-one)"],
-        navigo: ["var(--font-navigo)"],
+        "museo-sans": ["var(--font-museo-sans)"],
+        "sofia-sans": ["var(--font-sofia-sans)"],
       },
       boxShadow: {
         'glow-pink': '0 0 20px rgba(255, 0, 132, 0.3)',
         'glow-pink-lg': '0 0 40px rgba(255, 0, 132, 0.4)',
       },
-      // ДОБАВЬ ЭТО:
       keyframes: {
         'pulse-border': {
           '0%, 100%': {
