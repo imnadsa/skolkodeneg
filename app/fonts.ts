@@ -1,5 +1,5 @@
 import localFont from 'next/font/local'
-import { Montserrat } from 'next/font/google'
+import { Montserrat, Sofia_Sans } from 'next/font/google'
 
 export const daysOne = localFont({
   src: '../public/fonts/DaysOne-Regular.ttf',
@@ -19,8 +19,8 @@ export const montserrat = Montserrat({
   display: 'swap',
 })
 
-export const sofiaSans = localFont({
-  src: '../public/fonts/SofiaSans-Regular.ttf',
+export const sofiaSans = Sofia_Sans({
+  subsets: ['cyrillic', 'latin'],
   variable: '--font-sofia-sans',
   display: 'swap',
 })
