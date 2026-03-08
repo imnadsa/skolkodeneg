@@ -43,10 +43,13 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  /* Заголовки по умолчанию делаем Days One */
-  font-family: var(--font-days-one), sans-serif;
-  color: var(--text-primary);
+/* Помещаем правило в @layer base — тогда утилиты Tailwind (@layer utilities)
+   корректно его перекрывают без !important */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-days-one), sans-serif;
+    color: var(--text-primary);
+  }
 }
 
 /* Кастомный scrollbar */
@@ -71,8 +74,16 @@ h1, h2, h3, h4, h5, h6 {
 
 @layer utilities {
   .font-sofia-sans {
+    /* utilities слой перекрывает base слой — !important не нужен */
     font-family: var(--font-sofia-sans), sans-serif;
-    /* Именно эта строчка включает "круглую" кириллицу (т -> m, п -> n) */
-    font-feature-settings: "locl" 1, "ss01" 1, "ss02" 1;
+    font-feature-settings: "locl" 1;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

@@ -37,7 +37,7 @@ export default function Hero() {
             <h1 className="text-[38px] sm:text-5xl lg:text-[54px] xl:text-[60px] text-[#141414] leading-[1.1] mb-10 font-days-one">
               Считайте финансы<br />
               клиники{' '}
-              <span className="inline-flex overflow-hidden align-bottom h-[1.2em] min-w-[300px]">
+              <span className="inline-flex overflow-hidden align-bottom h-[1.2em] min-w-[300px] lg:min-w-[380px]">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={currentPhraseIndex}
@@ -137,8 +137,8 @@ function CheckIcon() {
   return (
     <div className="shrink-0 mt-1">
       <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="none" viewBox="0 0 27 27">
-        <path stroke="#ff0084" stroke-linecap="round" stroke-linejoin="round" strokeWidth="1.5" d="M24.141 6.66 12.487 19.98l-4.995-4.996m0 4.995-4.995-4.995m16.65-8.324-7.076 8.116"/>
-        <path stroke="#ff0084" stroke-linecap="round" stroke-linejoin="round" strokeWidth="1.5" d="M24.141 6.66 12.487 19.98l-4.995-4.996m0 4.995-4.995-4.995m16.65-8.324-7.076 8.116"/>
+        <path stroke="#ff0084" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M24.141 6.66 12.487 19.98l-4.995-4.996m0 4.995-4.995-4.995m16.65-8.324-7.076 8.116"/>
+        <path stroke="#ff0084" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M24.141 6.66 12.487 19.98l-4.995-4.996m0 4.995-4.995-4.995m16.65-8.324-7.076 8.116"/>
       </svg>
     </div>
   )
