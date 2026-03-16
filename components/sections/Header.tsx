@@ -18,6 +18,9 @@ export default function Header() {
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
+          <a href="#integration" className="text-[#141414] text-base hover:text-[#FF0084] transition-colors">
+            Внедрение
+          </a>
           <a href="#features" className="text-[#141414] text-base hover:text-[#FF0084] transition-colors">
             Возможности
           </a>
@@ -52,6 +55,9 @@ export default function Header() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t border-[#F0F0F0] px-4 py-6 flex flex-col gap-5">
+          <a href="#integration" onClick={() => setMenuOpen(false)} className="text-[#141414] text-lg hover:text-[#FF0084] transition-colors">
+            Внедрение
+          </a>
           <a href="#features" onClick={() => setMenuOpen(false)} className="text-[#141414] text-lg hover:text-[#FF0084] transition-colors">
             Возможности
           </a>
