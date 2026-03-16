@@ -5,7 +5,7 @@ import FeaturesSlider from '@/components/sections/FeaturesSlider'
 import Pricing from '@/components/sections/Pricing'
 import Security from '@/components/sections/Security'
 import Gift from '@/components/sections/Gift'
-import Сta from '@/components/sections/Cta'
+import CTA from '@/components/sections/CTA'
 import Faq from '@/components/sections/Faq'
 import Footer from '@/components/sections/Footer'
 
@@ -20,7 +20,7 @@ export default function Home() {
       <Pricing />
       <Security />
       <Gift />
-      <Cta />
+      <CTA />
       <Faq />
       <Footer />
     </main>
