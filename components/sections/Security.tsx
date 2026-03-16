@@ -27,6 +27,14 @@ const CloudIcon = () => (
   </svg>
 )
 
+const RolesIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="78" height="72" fill="none" viewBox="0 0 78 72">
+    <path fill="#fff" d="M34.665 62.253a12.67 12.67 0 0 0-4.42-5.492 17.2 17.2 0 0 0-3.604-1.918 10.73 10.73 0 0 0 2.632-11.498 11.895 11.895 0 0 0-14.813-7.44 11.25 11.25 0 0 0-7.7 8.548A11.28 11.28 0 0 0 9.784 55.3l.228.195q-1.232.514-2.373 1.203a15.2 15.2 0 0 0-2.632 2.145c-.812.837-1.541 1.75-2.178 2.727a21.8 21.8 0 0 0-2.792 7.016 1.073 1.073 0 0 0 .715 1.3 1.04 1.04 0 0 0 1.3-.682 23 23 0 0 1 3.445-5.818 29 29 0 0 1 1.918-2.08 27 27 0 0 1 2.044-1.882 29.4 29.4 0 0 1 3.25-2.404q.423.162.877.227c2.05.375 4.151.375 6.201 0a1.01 1.01 0 0 0 .748-.585.7.7 0 0 0 0 .423 1.04 1.04 0 0 0 1.332.584 13 13 0 0 0 2.275-1.072 27 27 0 0 1 3.738 2.86q1.033.975 1.947 2.08.926 1.098 1.657 2.34a34 34 0 0 1 2.795 6.493 1.04 1.04 0 0 0 1.26.905 1.04 1.04 0 0 0 .752-1.36 28 28 0 0 0-1.625-7.663m-13.319-6.5a.98.98 0 0 0-.585.65v-.162a.91.91 0 0 0-1.04-.78c-12.603 1.267-9.938-9.289-9.938-10.134a8.06 8.06 0 0 1 5.457-5.947 8.81 8.81 0 0 1 11.01 5.07 8.547 8.547 0 0 1-4.904 11.176zm54.509-34.856-.813-.552a23.7 23.7 0 0 0 1.723-5.944c.37-2.73.011-5.508-1.04-8.054A11.37 11.37 0 0 0 67.31.172a11.12 11.12 0 0 0-9.971 3.25 13.3 13.3 0 0 0-2.503 4.29 42 42 0 0 0-1.657 6.494l-2.145-.39h-.228a.94.94 0 0 0-.975.324 27 27 0 0 0-3.246 4.908 44 44 0 0 0-2.438 5.294 30.6 30.6 0 0 0-2.564 6.663 6.7 6.7 0 0 0 .325 3.665 7.4 7.4 0 0 0 2.112 2.795 17.5 17.5 0 0 0 3.998 2.373 55 55 0 0 0 7.533 2.892 60 60 0 0 0 7.862 1.788c1.424.27 2.873.39 4.322.357a7.8 7.8 0 0 0 3.247-.812 7.34 7.34 0 0 0 3.25-3.25 32.4 32.4 0 0 0 1.82-5.59A34.3 34.3 0 0 0 78 25.577a6.08 6.08 0 0 0-2.145-4.68M57.112 8.587a10.3 10.3 0 0 1 2.34-3.25 8.22 8.22 0 0 1 7.244-1.752 8.39 8.39 0 0 1 6.107 4.225 11.83 11.83 0 0 1 1.3 6.269 20.8 20.8 0 0 1-1.04 5.261 23 23 0 0 0-2.6-.812l-5.46-1.3c-2.824-.715-5.55-1.528-8.313-2.21l-1.82-.39a42 42 0 0 1 2.242-6.042M74.75 26.811a42.3 42.3 0 0 1-2.048 7.374 24.7 24.7 0 0 1-1.625 4.872 4.4 4.4 0 0 1-1.719 1.885 5 5 0 0 1-1.885.39 18.5 18.5 0 0 1-3.607-.26 65 65 0 0 1-7.436-1.625 62 62 0 0 1-7.244-2.437 14.6 14.6 0 0 1-3.25-1.82 4.55 4.55 0 0 1-1.398-1.658 4.5 4.5 0 0 1 0-2.987 53 53 0 0 1 1.95-5.395 46 46 0 0 1 2.145-5.16 25 25 0 0 1 2.145-3.9c1.853.357 3.673.812 5.392 1.3 2.762.78 5.46 1.69 8.284 2.502l5.232 1.56q1.443.406 2.825 1.007a7 7 0 0 1 1.462.943 3.8 3.8 0 0 1 .777 3.41"/>
+    <path fill="#fff" d="M60.85 25.837c-3.25-1.007-7.8 1.69-4.908 4.94 3.835 4.384 11.921-2.632 4.908-4.94"/>
+    <path fill="#e3ffd9" d="M37.785 14.693a15.6 15.6 0 0 0-9.032.683 23 23 0 0 0-3.51 1.722 18.5 18.5 0 0 0-3.02 2.438 16 16 0 0 0-4.42 7.861.942.942 0 0 0 1.723.553 15.3 15.3 0 0 1 4.875-5.915 27 27 0 0 1 2.698-1.95 25 25 0 0 1 2.889-1.658 14.3 14.3 0 0 1 7.374-1.686 1.04 1.04 0 0 0 .358-2.048zm21.602 30.635a.943.943 0 0 0-1.072.78 19.8 19.8 0 0 1-4.095 7.211q-1.096 1.397-2.373 2.633a25 25 0 0 1-2.596 2.34 13 13 0 0 1-7.375 2.954 1.072 1.072 0 0 0-.845 1.761c.183.206.44.332.715.348a14.95 14.95 0 0 0 9.357-2.34 17.5 17.5 0 0 0 3.25-2.532 20.3 20.3 0 0 0 2.597-3.25 19.8 19.8 0 0 0 3.25-8.898.975.975 0 0 0-.813-1.008"/>
+  </svg>
+)
+
 const securitySlides = [
   {
     id: 1,
@@ -50,7 +58,7 @@ const securitySlides = [
     description: "Линейный сотрудник видит только то, что нужно для работы — кнопки в боте.",
     subDescription: "",
     footerText: "Финансовая картина закрыта.",
-    icon: <ShieldIcon1 />
+    icon: <RolesIcon />
   },
   {
     id: 4,
@@ -80,82 +88,97 @@ export default function Security() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-[#8547FF] rounded-[48px] p-8 md:p-16 relative shadow-2xl overflow-hidden min-h-[600px] flex flex-col"
+          className="bg-[#8547FF] rounded-[24px] md:rounded-[32px] p-8 md:p-12 relative shadow-2xl overflow-hidden flex flex-col"
         >
           {/* Header */}
-          <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-white text-[32px] md:text-[56px] leading-[1.1] mb-4">
-              <span className="font-comfortaa font-bold block mb-2 md:mb-0 md:inline">Мы гарантируем</span><br className="hidden md:block" />
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-white text-[32px] md:text-[56px] leading-[1.1]">
+              <span className="font-comfortaa font-bold block">Мы гарантируем</span>
               <span className="font-days-one font-normal">безопасность финансов</span>
             </h2>
           </div>
 
           {/* Slider Controls */}
-          <div className="relative mb-12 md:mb-20 max-w-[480px] mx-auto w-full">
-             <div className="flex bg-white rounded-2xl overflow-hidden shadow-lg p-1 relative">
-                {securitySlides.map((slide, index) => (
-                    <button
-                        key={slide.id}
-                        onClick={() => setActiveSlide(index)}
-                        className={`flex-1 py-3 md:py-4 text-xl md:text-3xl font-bold transition-all duration-300 relative z-10 ${
-                            activeSlide === index ? 'text-white' : 'text-[#141414]'
-                        }`}
-                    >
-                        {slide.id}
-                    </button>
-                ))}
-                {/* Active Indicator Background */}
-                <motion.div 
-                    className="absolute top-1 bottom-1 bg-primary rounded-xl z-0"
-                    initial={false}
-                    animate={{ 
-                        left: `${(activeSlide / securitySlides.length) * 100}%`,
-                        width: `${100 / securitySlides.length}%`
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
+          <div className="relative mb-8 md:mb-12 max-w-[480px] mx-auto w-full">
+            <div className="flex bg-white rounded-2xl overflow-hidden shadow-lg p-1 relative">
+              {securitySlides.map((slide, index) => (
+                <button
+                  key={slide.id}
+                  onClick={() => setActiveSlide(index)}
+                  className={`flex-1 py-3 md:py-4 text-xl md:text-3xl font-bold transition-all duration-300 relative z-10 ${
+                    activeSlide === index ? 'text-white' : 'text-[#141414]'
+                  }`}
+                >
+                  {slide.id}
+                </button>
+              ))}
+              {/* Active Indicator Background */}
+              <motion.div 
+                className="absolute top-1 bottom-1 bg-primary rounded-xl z-0"
+                initial={false}
+                animate={{ 
+                  left: `${(activeSlide / securitySlides.length) * 100}%`,
+                  width: `${100 / securitySlides.length}%`
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              />
             </div>
           </div>
 
-          {/* Content Area - Narrower internal container for desktop */}
+          {/* Content Area */}
           <div className="relative flex-grow flex items-center justify-center">
-            <div className="w-full max-w-[760px] mx-auto">
-                <AnimatePresence mode="wait">
+            <div className="w-full max-w-[800px] mx-auto">
+              <AnimatePresence mode="wait">
                 <motion.div
-                    key={activeSlide}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4 }}
-                    className="flex flex-col lg:flex-row gap-8 md:gap-16 items-center lg:items-start text-center lg:text-left"
+                  key={activeSlide}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex flex-col items-center text-center lg:flex-row lg:items-start lg:text-left gap-6 lg:gap-12"
                 >
-                    {/* Icon Column */}
-                    <div className="shrink-0 w-24 h-24 md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] flex items-center justify-center">
-                        {securitySlides[activeSlide].icon}
+                  {/* Icon — mobile: centered above text; desktop: left column, large */}
+                  <div className="
+                    /* mobile */
+                    flex items-center justify-center shrink-0
+                    w-28 h-28
+                    /* desktop */
+                    lg:w-[160px] lg:h-[160px] lg:mt-1
+                  ">
+                    <div className="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full">
+                      {securitySlides[activeSlide].icon}
+                    </div>
+                  </div>
+
+                  {/* Text Column */}
+                  <div className="text-white flex flex-col flex-1">
+                    <h3 className="text-2xl md:text-[40px] font-bold mb-4 md:mb-6 leading-tight">
+                      {securitySlides[activeSlide].title}
+                    </h3>
+
+                    <div className="space-y-3 md:space-y-4 text-lg md:text-[20px] opacity-90 leading-snug">
+                      <p>{securitySlides[activeSlide].description}</p>
+                      {securitySlides[activeSlide].subDescription && (
+                        <p>{securitySlides[activeSlide].subDescription}</p>
+                      )}
                     </div>
 
-                    {/* Text Column */}
-                    <div className="text-white flex flex-col">
-                        <h3 className="text-2xl md:text-[44px] font-bold mb-6 leading-tight">
-                            {securitySlides[activeSlide].title}
-                        </h3>
+                    {/* Thin line separator */}
+                    <div className="h-px w-full max-w-[300px] lg:max-w-md bg-white/20 my-6 md:my-8 self-center lg:self-start" />
 
-                        <div className="space-y-4 md:space-y-6 text-lg md:text-[22px] opacity-90 leading-snug">
-                            <p>{securitySlides[activeSlide].description}</p>
-                            {securitySlides[activeSlide].subDescription && (
-                            <p>{securitySlides[activeSlide].subDescription}</p>
-                            )}
-                        </div>
-
-                        {/* Thin line separator */}
-                        <div className="h-px w-full max-w-[300px] lg:max-w-md bg-white/20 my-8 self-center lg:self-start" />
-
-                        <div className="text-lg md:text-[22px] font-comfortaa font-medium opacity-100">
-                            {securitySlides[activeSlide].footerText}
-                        </div>
-                    </div>
+                    {/* Footer text — Comfortaa for slides 1, 2, 3; normal for 4, 5 */}
+                    {activeSlide <= 2 ? (
+                      <p className="text-lg md:text-[20px] font-comfortaa font-semibold">
+                        {securitySlides[activeSlide].footerText}
+                      </p>
+                    ) : (
+                      <p className="text-lg md:text-[20px]">
+                        {securitySlides[activeSlide].footerText}
+                      </p>
+                    )}
+                  </div>
                 </motion.div>
-                </AnimatePresence>
+              </AnimatePresence>
             </div>
           </div>
         </motion.div>
