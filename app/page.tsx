@@ -8,11 +8,13 @@ import Gift from '@/components/sections/Gift'
 import CTA from '@/components/sections/CTA'
 import Faq from '@/components/sections/Faq'
 import Footer from '@/components/sections/Footer'
+import Header from '@/components/sections/Header'
 
 
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <Header />
       <Hero />
       <ForWho />
       <Integration /> 
