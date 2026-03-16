@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 export default function ForWho() {
   const pains = [
     "Платить бухгалтеру за то, что можно\nавтоматизировать",
@@ -19,18 +21,23 @@ export default function ForWho() {
     <section className="py-16 lg:py-24 bg-white">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         
-        {/* Главный заголовок — теперь тоже Museo Sans */}
         <h2 className="text-[32px] sm:text-4xl lg:text-5xl xl:text-[56px] text-[#141414] font-museo-sans font-medium leading-[1.1] mb-12 lg:mb-16 text-center lg:text-left tracking-tight">
           Для клиник, где всё <br className="hidden sm:block" /> держится на тебе
         </h2>
 
-        {/* Сетка: 1 колонка на мобилке, 2 колонки на ПК */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           
           {/* ЛЕВАЯ КОЛОНКА (Боли) */}
           <div className="flex flex-col">
-            {/* Заглушка под фото/видео */}
-            <div className="w-full aspect-[4/3] sm:aspect-video lg:aspect-[4/3] bg-[#D9D9D9] rounded-3xl mb-8 lg:mb-10"></div>
+            <div className="w-full aspect-[4/3] sm:aspect-video lg:aspect-[4/3] rounded-3xl mb-8 lg:mb-10 overflow-hidden relative">
+              <Image
+                src="/Forclinik1.png"
+                alt="Проблемы финансового учёта в клинике"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
             
             <h3 className="text-2xl lg:text-[28px] font-museo-sans font-medium text-[#141414] mb-6 lg:mb-8">
               Мы знаем, что вы не хотите:
@@ -52,8 +59,15 @@ export default function ForWho() {
 
           {/* ПРАВАЯ КОЛОНКА (Решения) */}
           <div className="flex flex-col">
-            {/* Заглушка под фото/видео */}
-            <div className="w-full aspect-[4/3] sm:aspect-video lg:aspect-[4/3] bg-[#D9D9D9] rounded-3xl mb-8 lg:mb-10"></div>
+            <div className="w-full aspect-[4/3] sm:aspect-video lg:aspect-[4/3] rounded-3xl mb-8 lg:mb-10 overflow-hidden relative">
+              <Image
+                src="/Forclinic2.png"
+                alt="Решение для финансового учёта клиники"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
             
             <h3 className="text-2xl lg:text-[28px] font-museo-sans font-medium text-[#141414] mb-6 lg:mb-8">
               Поэтому мы сделали иначе:
@@ -79,7 +93,6 @@ export default function ForWho() {
   )
 }
 
-// Твой оригинальный крестик
 function CrossIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
@@ -88,7 +101,6 @@ function CrossIcon() {
   )
 }
 
-// Твоя оригинальная галочка (с поправленными stopColor для React)
 function CheckCircleIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
