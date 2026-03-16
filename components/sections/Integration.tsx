@@ -2,7 +2,7 @@
 
 export default function Integration() {
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section id="integration" className="py-16 lg:py-24 bg-white">
       <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
 
         <div className="bg-[#F4F4F6] rounded-[40px] p-8 md:p-12 lg:p-16">
