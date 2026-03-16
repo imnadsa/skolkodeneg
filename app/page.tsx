@@ -2,6 +2,7 @@ import Hero from '@/components/sections/Hero'
 import ForWho from '@/components/sections/ForWho'
 import Integration from '@/components/sections/Integration'
 import FeaturesSlider from '@/components/sections/FeaturesSlider'
+import Pricing from '@/components/sections/Pricing'
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <ForWho />
       <Integration /> 
       <FeaturesSlider />
+      <Pricing />
     </main>
   )
 }
