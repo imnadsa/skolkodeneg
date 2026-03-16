@@ -27,9 +27,6 @@ export default function Header() {
           <a href="#pricing" className="text-[#141414] text-base hover:text-[#FF0084] transition-colors">
             Цены
           </a>
-          <a href="#faq" className="text-[#141414] text-base hover:text-[#FF0084] transition-colors">
-            FAQ
-          </a>
         </nav>
 
         {/* CTA button */}
