@@ -49,9 +49,7 @@ export default function Header({ onCta }: HeaderProps) {
       {menuOpen && (
         <div className="md:hidden bg-white border-t border-[#F0F0F0] px-4 py-6 flex flex-col gap-5">
           <a href="#integration" onClick={() => setMenuOpen(false)} className="text-[#141414] text-lg hover:text-[#FF0084] transition-colors">Внедрение</a>
-          <a href="#features" onClick={() => setMenuOpen(false)} className="text-[#141414] text-lg hover:text-[#FF0084] transition-colors">Возможности</a>
           <a href="#pricing" onClick={() => setMenuOpen(false)} className="text-[#141414] text-lg hover:text-[#FF0084] transition-colors">Цены</a>
-          <a href="#faq" onClick={() => setMenuOpen(false)} className="text-[#141414] text-lg hover:text-[#FF0084] transition-colors">FAQ</a>
           <button
             onClick={() => { setMenuOpen(false); onCta?.() }}
             className="inline-flex justify-center bg-[#FF0084] text-white font-sofia-sans font-semibold text-base rounded-full px-6 py-3"
