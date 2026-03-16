@@ -15,7 +15,6 @@ const countries = [
   { code: 'RU', flag: '🇷🇺', dial: '+7',   name: 'Россия' },
   { code: 'BY', flag: '🇧🇾', dial: '+375', name: 'Беларусь' },
   { code: 'KZ', flag: '🇰🇿', dial: '+7',   name: 'Казахстан' },
-  { code: 'UA', flag: '🇺🇦', dial: '+380', name: 'Украина' },
   { code: 'UZ', flag: '🇺🇿', dial: '+998', name: 'Узбекистан' },
   { code: 'AZ', flag: '🇦🇿', dial: '+994', name: 'Азербайджан' },
   { code: 'AM', flag: '🇦🇲', dial: '+374', name: 'Армения' },
