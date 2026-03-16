@@ -31,7 +31,7 @@ export default function ForWho() {
           <div className="flex flex-col">
             <div className="w-full aspect-[4/3] sm:aspect-video lg:aspect-[4/3] rounded-3xl mb-8 lg:mb-10 overflow-hidden relative">
               <Image
-                src="/Forclinik1.png"
+                src="/Forclinic1.png"
                 alt="Проблемы финансового учёта в клинике"
                 fill
                 className="object-cover"
