@@ -13,7 +13,11 @@ const phrases = [
   "за 5 минут в день"
 ]
 
-export default function Hero() {
+interface HeroProps {
+  onCta?: () => void
+}
+
+export default function Hero({ onCta }: HeroProps) {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0)
 
   // Таймер для смены фраз каждые 2.5 секунды
@@ -87,7 +91,10 @@ export default function Hero() {
 
             {/* Кнопка и подпись (Sofia Sans) */}
             <div className="flex flex-col items-start w-full sm:w-auto">
-              <button className="bg-primary hover:bg-primary-dark text-white font-sofia-sans text-xl lg:text-2xl px-14 py-4 rounded-full transition-all shadow-glow-pink transform active:scale-95 w-full sm:w-auto mb-4">
+              <button
+                onClick={onCta}
+                className="bg-primary hover:bg-primary-dark text-white font-sofia-sans text-xl lg:text-2xl px-14 py-4 rounded-full transition-all shadow-glow-pink transform active:scale-95 w-full sm:w-auto mb-4"
+              >
                 стать клиентом
               </button>
               <p className="text-[#141414] font-sofia-sans text-lg lg:text-xl italic ml-2">
