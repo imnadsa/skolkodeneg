@@ -1,18 +1,18 @@
 'use client'
 
-export default function Footer() {
+interface FooterProps {
+  onCta?: () => void
+}
+
+export default function Footer({ onCta }: FooterProps) {
   return (
     <footer className="bg-[#141414] text-white">
       <div className="container mx-auto px-4 max-w-7xl py-12 md:py-16">
-        
-        {/* Top row */}
+
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10 md:gap-16 mb-12">
-          
-          {/* Brand */}
+
           <div className="flex flex-col gap-4 max-w-xs">
-            <span className="text-white text-2xl font-days-one">
-              Сколько Денег
-            </span>
+            <span className="text-white text-2xl font-days-one">Сколько Денег</span>
             <p className="text-[#999] text-sm leading-relaxed">
               Финансовый учёт для медицинских клиник. Просто, быстро, безопасно.
             </p>
@@ -21,14 +21,13 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Nav links */}
           <div className="flex flex-col sm:flex-row gap-8 md:gap-16">
             <div className="flex flex-col gap-3">
               <p className="text-[#999] text-xs uppercase tracking-widest mb-1">Сервис</p>
-              <a href="#" className="text-white/80 hover:text-white text-sm transition-colors">Возможности</a>
-              <a href="#" className="text-white/80 hover:text-white text-sm transition-colors">Цены</a>
-              <a href="#" className="text-white/80 hover:text-white text-sm transition-colors">Безопасность</a>
-              <a href="#" className="text-white/80 hover:text-white text-sm transition-colors">FAQ</a>
+              <a href="#features" className="text-white/80 hover:text-white text-sm transition-colors">Возможности</a>
+              <a href="#pricing" className="text-white/80 hover:text-white text-sm transition-colors">Цены</a>
+              <a href="#security" className="text-white/80 hover:text-white text-sm transition-colors">Безопасность</a>
+              <a href="#faq" className="text-white/80 hover:text-white text-sm transition-colors">FAQ</a>
             </div>
             <div className="flex flex-col gap-3">
               <p className="text-[#999] text-xs uppercase tracking-widest mb-1">Контакты</p>
@@ -43,33 +42,27 @@ export default function Footer() {
                 </svg>
                 Telegram
               </a>
-              <a
-                href="mailto:hello@skolkodeneg.ru"
-                className="text-white/80 hover:text-white text-sm transition-colors"
-              >
+              <a href="mailto:hello@skolkodeneg.ru" className="text-white/80 hover:text-white text-sm transition-colors">
                 hello@skolkodeneg.ru
               </a>
             </div>
           </div>
 
-          {/* CTA */}
           <div className="flex flex-col gap-4">
             <p className="text-white/80 text-sm leading-snug max-w-[200px]">
               Готовы начать? Внедрим за 1–2 дня.
             </p>
-            <a
-              href="#"
+            <button
+              onClick={onCta}
               className="inline-block bg-[#FF0084] hover:bg-[#e8006e] active:scale-[0.98] transition-all duration-200 text-white text-base font-sofia-sans font-semibold rounded-full py-3 px-7 text-center"
             >
               стать клиентом
-            </a>
+            </button>
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-white/10 mb-8" />
 
-        {/* Bottom row */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[#666] text-xs">
           <p>© {new Date().getFullYear()} Сколько Денег. Все права защищены.</p>
           <div className="flex gap-6">
