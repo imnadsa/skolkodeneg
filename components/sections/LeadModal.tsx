@@ -11,6 +11,25 @@ const roles = [
   'Другое',
 ]
 
+const countries = [
+  { code: 'RU', flag: '🇷🇺', dial: '+7',   name: 'Россия' },
+  { code: 'BY', flag: '🇧🇾', dial: '+375', name: 'Беларусь' },
+  { code: 'KZ', flag: '🇰🇿', dial: '+7',   name: 'Казахстан' },
+  { code: 'UA', flag: '🇺🇦', dial: '+380', name: 'Украина' },
+  { code: 'UZ', flag: '🇺🇿', dial: '+998', name: 'Узбекистан' },
+  { code: 'AZ', flag: '🇦🇿', dial: '+994', name: 'Азербайджан' },
+  { code: 'AM', flag: '🇦🇲', dial: '+374', name: 'Армения' },
+  { code: 'GE', flag: '🇬🇪', dial: '+995', name: 'Грузия' },
+  { code: 'MD', flag: '🇲🇩', dial: '+373', name: 'Молдова' },
+  { code: 'KG', flag: '🇰🇬', dial: '+996', name: 'Кыргызстан' },
+  { code: 'TJ', flag: '🇹🇯', dial: '+992', name: 'Таджикистан' },
+  { code: 'TM', flag: '🇹🇲', dial: '+993', name: 'Туркменистан' },
+  { code: 'DE', flag: '🇩🇪', dial: '+49',  name: 'Германия' },
+  { code: 'IL', flag: '🇮🇱', dial: '+972', name: 'Израиль' },
+  { code: 'TR', flag: '🇹🇷', dial: '+90',  name: 'Турция' },
+  { code: 'AE', flag: '🇦🇪', dial: '+971', name: 'ОАЭ' },
+]
+
 interface LeadModalProps {
   isOpen: boolean
   onClose: () => void
@@ -19,38 +38,34 @@ interface LeadModalProps {
 export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
   const [role, setRole] = useState('')
   const [roleOpen, setRoleOpen] = useState(false)
+  const [countryOpen, setCountryOpen] = useState(false)
+  const [selectedCountry, setSelectedCountry] = useState(countries[0])
   const [submitted, setSubmitted] = useState(false)
-  const roleRef = useRef<HTMLDivElement>(null)
 
-  // Закрытие дропдауна при клике вне
+  const roleRef = useRef<HTMLDivElement>(null)
+  const countryRef = useRef<HTMLDivElement>(null)
+
+  // Закрытие дропдаунов при клике вне
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (roleRef.current && !roleRef.current.contains(e.target as Node)) {
-        setRoleOpen(false)
-      }
+      if (roleRef.current && !roleRef.current.contains(e.target as Node)) setRoleOpen(false)
+      if (countryRef.current && !countryRef.current.contains(e.target as Node)) setCountryOpen(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  // Блокировка скролла фона
+  // Блокировка скролла
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
-  // Закрытие по Escape
+  // Escape
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', handler)
     return () => document.removeEventListener('keydown', handler)
   }, [onClose])
@@ -64,12 +79,8 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
   const handleClose = () => {
     onClose()
     setTimeout(() => {
-      setName('')
-      setPhone('')
-      setEmail('')
-      setRole('')
-      setSubmitted(false)
-      setRoleOpen(false)
+      setName(''); setPhone(''); setRole('')
+      setSubmitted(false); setRoleOpen(false); setCountryOpen(false)
     }, 300)
   }
 
@@ -98,7 +109,7 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
           >
             <div className="bg-white rounded-[28px] w-full max-w-[520px] p-8 md:p-10 relative shadow-2xl max-h-[90vh] overflow-y-auto">
 
-              {/* Close button */}
+              {/* Close */}
               <button
                 onClick={handleClose}
                 className="absolute top-5 right-5 w-9 h-9 flex items-center justify-center rounded-full bg-[#F2F2F2] hover:bg-[#E5E5E5] transition-colors"
@@ -110,13 +121,8 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
 
               <AnimatePresence mode="wait">
                 {!submitted ? (
-                  <motion.div
-                    key="form"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    {/* Title */}
+                  <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+
                     <h2 className="font-museo-sans font-bold text-[28px] md:text-[36px] text-[#141414] leading-tight mb-3 pr-8">
                       Станьте клиентом сервиса<br />
                       <span className="text-[#FF0084]">"Сколько Денег"</span>
@@ -137,34 +143,72 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
                         className="w-full bg-[#F4F6F8] rounded-2xl px-5 py-4 text-[#141414] text-base font-museo-sans outline-none focus:ring-2 focus:ring-[#FF0084]/30 transition-all placeholder:text-[#A0A0A0]"
                       />
 
-                      {/* Phone */}
-                      <div className="flex items-center bg-[#F4F6F8] rounded-2xl px-5 py-4 gap-3 focus-within:ring-2 focus-within:ring-[#FF0084]/30 transition-all">
-                        <span className="text-lg">🇷🇺</span>
-                        <span className="text-[#141414] font-museo-sans text-base">+7</span>
+                      {/* Phone with country picker */}
+                      <div className="flex gap-2">
+                        {/* Country dropdown */}
+                        <div ref={countryRef} className="relative shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => { setCountryOpen(!countryOpen); setRoleOpen(false) }}
+                            className="h-full bg-[#F4F6F8] rounded-2xl px-4 py-4 flex items-center gap-2 hover:bg-[#ECEEF0] transition-colors"
+                          >
+                            <span className="text-lg">{selectedCountry.flag}</span>
+                            <span className="text-[#141414] font-museo-sans text-sm">{selectedCountry.dial}</span>
+                            <motion.svg
+                              animate={{ rotate: countryOpen ? 180 : 0 }}
+                              transition={{ duration: 0.2 }}
+                              width="12" height="12" viewBox="0 0 12 12" fill="none"
+                            >
+                              <path d="M2 4l4 4 4-4" stroke="#A0A0A0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </motion.svg>
+                          </button>
+
+                          <AnimatePresence>
+                            {countryOpen && (
+                              <motion.div
+                                initial={{ opacity: 0, y: -8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -8 }}
+                                transition={{ duration: 0.15 }}
+                                className="absolute top-full left-0 mt-2 bg-white rounded-2xl shadow-xl border border-[#F0F0F0] overflow-y-auto z-20 w-52 max-h-64"
+                              >
+                                {countries.map((c) => (
+                                  <button
+                                    key={c.code}
+                                    type="button"
+                                    onClick={() => { setSelectedCountry(c); setCountryOpen(false) }}
+                                    className={`w-full text-left px-4 py-3 text-sm font-museo-sans flex items-center gap-3 transition-colors
+                                      ${selectedCountry.code === c.code
+                                        ? 'bg-[#FF0084]/5 text-[#FF0084]'
+                                        : 'text-[#141414] hover:bg-[#F4F6F8]'
+                                      }`}
+                                  >
+                                    <span className="text-base">{c.flag}</span>
+                                    <span>{c.name}</span>
+                                    <span className="ml-auto text-[#A0A0A0]">{c.dial}</span>
+                                  </button>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+
+                        {/* Phone input */}
                         <input
                           type="tel"
                           placeholder="(000) 000-00-00"
                           value={phone}
                           onChange={e => setPhone(e.target.value)}
                           required
-                          className="flex-1 bg-transparent text-[#141414] text-base font-museo-sans outline-none placeholder:text-[#A0A0A0]"
+                          className="flex-1 bg-[#F4F6F8] rounded-2xl px-5 py-4 text-[#141414] text-base font-museo-sans outline-none focus:ring-2 focus:ring-[#FF0084]/30 transition-all placeholder:text-[#A0A0A0]"
                         />
                       </div>
-
-                      {/* Email */}
-                      <input
-                        type="email"
-                        placeholder="E-mail"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        className="w-full bg-[#F4F6F8] rounded-2xl px-5 py-4 text-[#141414] text-base font-museo-sans outline-none focus:ring-2 focus:ring-[#FF0084]/30 transition-all placeholder:text-[#A0A0A0]"
-                      />
 
                       {/* Role dropdown */}
                       <div ref={roleRef} className="relative">
                         <button
                           type="button"
-                          onClick={() => setRoleOpen(!roleOpen)}
+                          onClick={() => { setRoleOpen(!roleOpen); setCountryOpen(false) }}
                           className={`w-full bg-[#F4F6F8] rounded-2xl px-5 py-4 text-base font-museo-sans outline-none text-left flex items-center justify-between transition-all ${
                             roleOpen ? 'ring-2 ring-[#FF0084]/30' : ''
                           } ${role ? 'text-[#141414]' : 'text-[#A0A0A0]'}`}
@@ -192,22 +236,14 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
                                 <button
                                   key={r}
                                   type="button"
-                                  onClick={() => {
-                                    setRole(r)
-                                    setRoleOpen(false)
-                                  }}
+                                  onClick={() => { setRole(r); setRoleOpen(false) }}
                                   className={`w-full text-left px-5 py-3.5 text-base font-museo-sans transition-colors flex items-center gap-3
-                                    ${role === r
-                                      ? 'bg-[#FF0084]/5 text-[#FF0084]'
-                                      : 'text-[#141414] hover:bg-[#F4F6F8]'
-                                    }`}
+                                    ${role === r ? 'bg-[#FF0084]/5 text-[#FF0084]' : 'text-[#141414] hover:bg-[#F4F6F8]'}`}
                                 >
-                                  {role === r && (
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                      <path d="M2 7l4 4 6-7" stroke="#FF0084" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
-                                  )}
-                                  {role !== r && <span className="w-[14px]" />}
+                                  {role === r
+                                    ? <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l4 4 6-7" stroke="#FF0084" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                    : <span className="w-[14px]" />
+                                  }
                                   {r}
                                 </button>
                               ))}
@@ -246,9 +282,7 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="font-museo-sans font-bold text-[26px] text-[#141414] mb-2">
-                        Заявка отправлена!
-                      </h3>
+                      <h3 className="font-museo-sans font-bold text-[26px] text-[#141414] mb-2">Заявка отправлена!</h3>
                       <p className="text-[#6B6B6B] font-museo-sans text-base leading-relaxed">
                         Мы свяжемся с вами в ближайшее время и подберём лучший формат внедрения для вашей клиники.
                       </p>
