@@ -23,14 +23,8 @@ export default function Header({ onCta }: HeaderProps) {
           <a href="#integration" className="text-[#141414] text-base hover:text-[#FF0084] transition-colors">
             Внедрение
           </a>
-          <a href="#features" className="text-[#141414] text-base hover:text-[#FF0084] transition-colors">
-            Возможности
-          </a>
           <a href="#pricing" className="text-[#141414] text-base hover:text-[#FF0084] transition-colors">
             Цены
-          </a>
-          <a href="#faq" className="text-[#141414] text-base hover:text-[#FF0084] transition-colors">
-            FAQ
           </a>
         </nav>
 
