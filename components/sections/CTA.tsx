@@ -2,7 +2,11 @@
 
 import { motion } from 'framer-motion'
 
-export default function Cta() {
+interface CtaProps {
+  onCta?: () => void
+}
+
+export default function Cta({ onCta }: CtaProps) {
   return (
     <section className="py-12 md:py-20 bg-white">
       <div className="container mx-auto px-4 max-w-3xl">
@@ -35,7 +39,7 @@ export default function Cta() {
               rows={4}
               className="w-full rounded-2xl border border-[#E5E5E5] bg-white px-5 py-4 text-[#141414] text-base md:text-lg outline-none focus:border-[#FF0084] transition-colors resize-none"
             />
-            <button className="w-full bg-[#FF0084] hover:bg-[#e8006e] active:scale-[0.98] transition-all duration-200 text-white text-xl font-sofia-sans font-semibold rounded-full py-5 px-8 mt-2">
+            <button onClick={onCta} className="w-full bg-[#FF0084] hover:bg-[#e8006e] active:scale-[0.98] transition-all duration-200 text-white text-xl font-sofia-sans font-semibold rounded-full py-5 px-8 mt-2">
               отправить вопрос
             </button>
             <p className="text-[#999] text-sm">
