@@ -43,6 +43,8 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
   const [countryOpen, setCountryOpen] = useState(false)
   const [selectedCountry, setSelectedCountry] = useState(countries[0])
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
 
   const roleRef = useRef<HTMLDivElement>(null)
   const countryRef = useRef<HTMLDivElement>(null)
@@ -70,17 +72,41 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
     return () => document.removeEventListener('keydown', handler)
   }, [onClose])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name || !phone || !role) return
-    setSubmitted(true)
+
+    setIsSubmitting(true)
+    setSubmitError(false)
+
+    try {
+      const response = await fetch(
+        'https://telegram-bot-proxy-ashy.vercel.app/api/send-telegram',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            phone: `${selectedCountry.dial} ${phone}`,
+            role: role,
+          }),
+        }
+      )
+      if (!response.ok) throw new Error('Ошибка отправки')
+      setSubmitted(true)
+    } catch (error) {
+      console.error('Error:', error)
+      setSubmitError(true)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleClose = () => {
     onClose()
     setTimeout(() => {
       setName(''); setPhone(''); setRole('')
-      setSubmitted(false); setRoleOpen(false); setCountryOpen(false)
+      setSubmitted(false); setRoleOpen(false); setCountryOpen(false); setSubmitError(false)
     }, 300)
   }
 
@@ -252,13 +278,29 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
                         </AnimatePresence>
                       </div>
 
+                      {submitError && (
+                        <p className="text-red-500 text-sm font-museo-sans text-center">
+                          Ошибка отправки. Попробуйте ещё раз.
+                        </p>
+                      )}
+
                       {/* Submit */}
                       <button
                         type="submit"
-                        disabled={!name || !phone || !role}
-                        className="w-full bg-[#FF0084] hover:bg-[#e8006e] disabled:bg-[#FFB3D9] disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-200 text-white text-lg font-sofia-sans font-semibold rounded-full py-4 px-8 mt-2"
+                        disabled={!name || !phone || !role || isSubmitting}
+                        className="w-full bg-[#FF0084] hover:bg-[#e8006e] disabled:bg-[#FFB3D9] disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-200 text-white text-lg font-sofia-sans font-semibold rounded-full py-4 px-8 mt-2 flex items-center justify-center gap-2"
                       >
-                        отправить заявку
+                        {isSubmitting ? (
+                          <>
+                            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                            </svg>
+                            <span>Отправка...</span>
+                          </>
+                        ) : (
+                          <span>отправить заявку</span>
+                        )}
                       </button>
 
                       <p className="text-[#999] text-xs text-center font-museo-sans mt-1">
