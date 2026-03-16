@@ -11,7 +11,11 @@ const GiftIcon = () => (
   </svg>
 )
 
-export default function Gift() {
+interface GiftProps {
+  onCta?: () => void
+}
+
+export default function Gift({ onCta }: GiftProps) {
   return (
     <section className="py-12 md:py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4 max-w-2xl">
@@ -40,7 +44,7 @@ export default function Gift() {
           </div>
 
           {/* CTA Button */}
-          <button className="w-full max-w-md bg-[#FF0084] hover:bg-[#e8006e] active:scale-[0.98] transition-all duration-200 text-white text-xl md:text-2xl font-sofia-sans font-semibold rounded-full py-5 px-8">
+          <button onClick={onCta} className="w-full max-w-md bg-[#FF0084] hover:bg-[#e8006e] active:scale-[0.98] transition-all duration-200 text-white text-xl md:text-2xl font-sofia-sans font-semibold rounded-full py-5 px-8">
             стать клиентом
           </button>
         </motion.div>
