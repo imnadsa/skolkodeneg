@@ -3,6 +3,30 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+// SVG Icons
+const ShieldIcon1 = () => (
+  <svg width="87" height="87" viewBox="0 0 87 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clipPath="url(#a_sec1)">
+      <path fillRule="evenodd" clipRule="evenodd" d="M83.049 9.87C70.36-4.012 25.056-2.127 5.049 8.567a1.305 1.305 0 0 0 1.197 2.32C26.002.772 69.314.265 80.152 12.48c1.958 2.247-1.45 32.618-3.335 40.738S58.692 75.694 50.645 80.515c-5.293 3.19-5.909 3.081-11.093 0-9.856-6.018-28.376-23.128-28.992-27.369 0-.616-6.634-34.832-6.018-37.261a1.16 1.16 0 0 0-2.211-.58c-.689 3.081 5.292 36.794 5.365 37.99.471 6.63 28.996 33.778 37.551 33.705s33.238-21.424 35.848-32.621c1.269-5.873 6.159-39.872 1.954-44.508" fill="#fff"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M40.354 43.797c5.22 3.045 14.246-1.776 11.455-7.504a1.31 1.31 0 1 0-2.43.979c.943 2.828-4.53 4.531-6.633 2.936a3.625 3.625 0 0 1 0-5.038 5.87 5.87 0 0 1 5.981-.508 1.16 1.16 0 0 0 .979-2.03c-10.15-5.764-16.494 6.38-9.353 11.165" fill="#e3ffd9"/>
+      <path fillRule="evenodd" clipRule="evenodd" d="M25.817 49.63c.435.689 2.429 3.625 2.755 4.024a3.99 3.99 0 0 0 4.133.47 24 24 0 0 0 3.625-2.102q.97.545 1.994.98c0 2.863-.617 5.98 1.703 7.25a11.46 11.46 0 0 0 5.547.833c.87 0 4.458-.399 4.857-.508a3.84 3.84 0 0 0 2.429-2.9 15.1 15.1 0 0 0 0-4.785c.507-.253.761-.362 1.305-.688a9.84 9.84 0 0 0 5.184 1.812c3.95-.435 5.288-5.075 6.702-7.504a2.14 2.14 0 0 0-.181-2.465c-5.546-6.488-5.184-3.226-5.329-6.452 1.16-.834 4.06-2.32 4.785-4.133 1.414-3.625-1.957-6.775-3.407-9.204a1.7 1.7 0 0 0-1.813-.797q-2.026.45-3.987 1.124c-4.17 1.413-1.45 1.45-4.785.181-.508-3.009.326-6.887-4.133-7.576a34 34 0 0 0-6.235.362 1.27 1.27 0 0 0-1.16.87 34 34 0 0 0-1.196 6.127 9.8 9.8 0 0 0-2.244 1.05c-4.314-2.863-5.909-4.82-9.679 1.487-.399.689-2.03 3.843-2.139 4.241-.833 2.936 3.626 4.821 5.148 5.728a25 25 0 0 0 0 2.755c-5.184 2.61-7.866 3.226-3.879 9.823m6.344-7.25a1.7 1.7 0 0 0 .87-1.74c-.87-5.654 1.776-4.422-3.117-7.032-.472-.254-2.103-.942-2.466-1.595a22.5 22.5 0 0 1 3.625-6.195c1.74.435 4.423 3.625 5.837 2.537 1.957-1.486 3.842-1.413 3.879-2.718-.033-1.9.273-3.79.906-5.583 7.721-.616 6.162-.326 6.706 6.126a1.56 1.56 0 0 0 1.015 1.305c6.126 3.19 1.921 1.595 10.15-.29.725 1.088 2.791 3.625 2.284 5.003-6.126 4.096-5.293 2.537-5.293 8.192 0 1.885 1.197 1.197 5.075 5.51-.435.907-1.812 3.88-2.827 3.988-7.25-3.625-3.625-2.139-8.954-.363-2.538.834-1.087 4.06-1.196 6.92a8.7 8.7 0 0 1-3.372.508 9.8 9.8 0 0 1-2.718 0v-5.111a2.066 2.066 0 0 0-1.486-2.03c-3.626-1.015-4.097-2.755-5.8-1.631-4.93 3.19-3.988 2.9-4.713 1.92a18.1 18.1 0 0 1-2.9-5.002 32.6 32.6 0 0 1 4.495-2.791z" fill="#e3ffd9"/>
+    </g>
+    <defs>
+      <clipPath id="a_sec1">
+        <path fill="#fff" d="M0 0h87v87H0z"/>
+      </clipPath>
+    </defs>
+  </svg>
+)
+
+const CloudIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="85" height="87" fill="none" viewBox="0 0 85 87">
+    <path fill="#fff" d="M84.852 13.555a5.8 5.8 0 0 0-.471-2.647 2.61 2.61 0 0 0-2.172-1.446 4.7 4.7 0 0 0-2.787.797 8.7 8.7 0 0 1-5.463 1.704 3.6 3.6 0 0 1-1.813-.543 10.9 10.9 0 0 1-2.606-3.045 4.7 4.7 0 0 0-2.788-1.733 3.19 3.19 0 0 0-2.639.652 16.8 16.8 0 0 1-3.335 2.857 5.6 5.6 0 0 1-2.856.507 13.5 13.5 0 0 1-7.24-3.114 2.212 2.212 0 0 0-3.367.834 13.8 13.8 0 0 0-1.233 3.618 38.5 38.5 0 0 0-.072 5.43c0 1.414-.399 7.24-.326 12.597a60 60 0 0 0 .326 8.544 13.85 13.85 0 0 0 4.455 6.514 26.5 26.5 0 0 0 10.027 5.43.98.98 0 0 0 1.269-.688 1.05 1.05 0 0 0-.69-1.269 24.7 24.7 0 0 1-7.673-3.98 12.33 12.33 0 0 1-4.778-6.406 73 73 0 0 1 0-8.109c0-5.466.689-10.857.797-12.452a36 36 0 0 1 .508-4.814q.163-.96.504-1.885a15.95 15.95 0 0 0 7.239 3.625 9.6 9.6 0 0 0 4.778-.906 10.2 10.2 0 0 0 2.86-2.139q.413-.457.761-.975c.508.181.689.798 1.051 1.342a10.8 10.8 0 0 0 2.857 2.892 8.1 8.1 0 0 0 3.621 1.124 10.8 10.8 0 0 0 4.633-.725 20 20 0 0 0 2.57-1.305q.294 1.215.363 2.465c0 1.881 0 3.618-.218 4.343-.217.725-.797 6.731-1.667 12.452-.472 3.114-.98 6.082-1.447 8a13.78 13.78 0 0 1-6.151 5.358 21.4 21.4 0 0 1-8.4 2.28 1.16 1.16 0 0 0-1.123 1.196 1.196 1.196 0 0 0 1.196 1.12 24.3 24.3 0 0 0 9.447-2.283 16.93 16.93 0 0 0 7.601-6.478v-.29c.58-1.954 1.197-5.1 1.813-8.396 1.047-5.793 1.99-11.98 2.059-12.597.344-2.471.538-4.961.58-7.456M1.814 15.327A5.98 5.98 0 0 0 .4 21.77a.98.98 0 0 0 1.305.544.942.942 0 0 0 .544-1.305 3.37 3.37 0 0 1 .616-2.857 5.8 5.8 0 0 1 1.486-1.522c1.084-1.7 1.12-2.966-.978-2.748q-.862.628-1.56 1.446m66.424 49.558c.182 1.373-.543 1.917-1.05 3.364a7.97 7.97 0 0 1-3.401 3.621 36.3 36.3 0 0 1-7.783 3.4l-13.286 4.416a45 45 0 0 1-11.98 3.226 15.2 15.2 0 0 1-7.493-1.378 2.5 2.5 0 0 1-.689-.834c-.399-.616-.689-1.34-.979-1.885-.833-1.59-1.59-3.218-2.352-4.882a96 96 0 0 1-2.1-4.996c-3.327-8.29-7.238-17.41-10.135-26.607A98 98 0 0 1 2.575 24.16a.98.98 0 0 0-1.124-.906.98.98 0 0 0-.906 1.124A99.3 99.3 0 0 0 4.17 43.236c2.64 9.374 6.224 18.68 9.23 27.151.688 1.773 1.377 3.618 2.135 5.246.76 1.631 1.558 3.404 2.425 5.068a16.7 16.7 0 0 0 1.74 3.113 4.76 4.76 0 0 0 1.732 1.342 18.14 18.14 0 0 0 9.56 1.772 47.9 47.9 0 0 0 12.995-3.621l13.065-4.887a40.6 40.6 0 0 0 8.363-4.016 12.4 12.4 0 0 0 4.306-5.14 6.16 6.16 0 0 0 .544-4.67c-.218-1.123-1.664-.833-2.027.29"/>
+    <path fill="#e3ffd9" d="M66.43 55.18a1.124 1.124 0 0 0-1.595-.326 1.16 1.16 0 0 0-.327 1.631 12.5 12.5 0 0 1 1.85 4.38 22 22 0 0 1-6.482 3.62c-3.223 1.193-6.442 2.28-9.665 3.401l-8.616 3.331c-2.824 1.124-5.608 2.28-8.505 3.114a45 45 0 0 1-6.119 1.41 185 185 0 0 1-6.731-17.12c-1.559-4.633-2.97-9.339-4.343-14.011-1.377-4.67-2.864-9.52-4.093-14.225-1.05-3.617-2.388-7.493-3.364-11.292a75 75 0 0 1-1.087-4.563c1.015-.617 2.139-1.197 3.331-1.773l1.523-.652 2.566 3.403c.29.4.617 1.015.943 1.487q.326.492.797.87a2.83 2.83 0 0 0 1.737.286 23 23 0 0 0 3.617-.471 20.4 20.4 0 0 0 3.404-.689c2.425-.652 4.778-1.628 7.24-2.244a21.5 21.5 0 0 0 3.186-.87 2.9 2.9 0 0 0 1.45-1.12q.435-.798.576-1.704c0-.902 0-2.022.181-2.675q.218-1.686.653-3.331c0-.58.362-1.124.544-1.668a58 58 0 0 1 3.835-.721 4.3 4.3 0 0 1 1.99 0 2.14 2.14 0 0 1 1.305 1.595s.435.471 1.051.362a1.09 1.09 0 0 0 .867-.942v-.399a4.35 4.35 0 0 0-1.56-2.175A5.8 5.8 0 0 0 42.397.055a98.5 98.5 0 0 0-17.484 3.186 74.7 74.7 0 0 0-11.255 4.053c-3.625 1.704-8.653 3.223-8.182 8.254.181 1.378.399 2.715.653 4.053.76 3.875 1.736 7.71 2.497 11.55.69 3.222 1.374 6.477 2.208 9.7a167 167 0 0 0 4.379 14.224 170 170 0 0 0 9.845 22.298 1.23 1.23 0 0 0 1.088.58 72.5 72.5 0 0 0 12.883-1.885 69 69 0 0 0 5.177-1.628c2.465-.87 4.922-1.954 7.239-2.929 3.154-1.414 6.336-2.755 9.45-4.238 2.063-.978 4.705-3.037 6.732-4.197 2.86-1.922.326-5.72-1.196-7.892M17.057 10.042a145 145 0 0 1 9.552-3.255 176 176 0 0 1 9.56-2.647s-.835 2.538-1.16 3.625l-.58 2.676c-2.897.725-15.853 4.705-15.853 4.705-.544.145-4.129-4.234-4.129-4.234z"/>
+    <path fill="#fff" d="M64.11 41.609a5.5 5.5 0 0 0 2.175-1.74 32.5 32.5 0 0 0 2.642-3.944c1.882-3.223 3.364-6.66 5.463-9.737a20 20 0 0 1 2.864-3.621 1.124 1.124 0 0 0 0-1.632 1.16 1.16 0 0 0-1.631 0 24 24 0 0 0-4.706 4.854c-1.957 2.57-3.621 5.394-5.394 8.037-.398.652-1.015 1.7-1.667 2.679q-.3.556-.689 1.05c-.214-.362-6.55-6.88-6.55-6.88a.98.98 0 0 0-1.41 0 1.014 1.014 0 0 0 0 1.45l5.067 6.877s1.088 1.52 1.523 2.027a1.96 1.96 0 0 0 2.316.58"/>
+  </svg>
+)
+
 const securitySlides = [
   {
     id: 1,
@@ -10,20 +34,7 @@ const securitySlides = [
     description: "Доступ к дашборду — только у собственника или руководителя!",
     subDescription: "Администраторы вносят данные через бот, но видеть картину целиком может только владелец.",
     footerText: "Никаких утечек внутри команды.",
-    icon: (
-      <svg width="87" height="87" viewBox="0 0 87 87" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clipPath="url(#a_sec1)">
-          <path fillRule="evenodd" clipRule="evenodd" d="M83.049 9.87C70.36-4.012 25.056-2.127 5.049 8.567a1.305 1.305 0 0 0 1.197 2.32C26.002.772 69.314.265 80.152 12.48c1.958 2.247-1.45 32.618-3.335 40.738S58.692 75.694 50.645 80.515c-5.293 3.19-5.909 3.081-11.093 0-9.856-6.018-28.376-23.128-28.992-27.369 0-.616-6.634-34.832-6.018-37.261a1.16 1.16 0 0 0-2.211-.58c-.689 3.081 5.292 36.794 5.365 37.99.471 6.63 28.996 33.778 37.551 33.705s33.238-21.424 35.848-32.621c1.269-5.873 6.159-39.872 1.954-44.508" fill="#fff"/>
-          <path fillRule="evenodd" clipRule="evenodd" d="M40.354 43.797c5.22 3.045 14.246-1.776 11.455-7.504a1.31 1.31 0 1 0-2.43.979c.943 2.828-4.53 4.531-6.633 2.936a3.625 3.625 0 0 1 0-5.038 5.87 5.87 0 0 1 5.981-.508 1.16 1.16 0 0 0 .979-2.03c-10.15-5.764-16.494 6.38-9.353 11.165" fill="#e3ffd9"/>
-          <path fillRule="evenodd" clipRule="evenodd" d="M25.817 49.63c.435.689 2.429 3.625 2.755 4.024a3.99 3.99 0 0 0 4.133.47 24 24 0 0 0 3.625-2.102q.97.545 1.994.98c0 2.863-.617 5.98 1.703 7.25a11.46 11.46 0 0 0 5.547.833c.87 0 4.458-.399 4.857-.508a3.84 3.84 0 0 0 2.429-2.9 15.1 15.1 0 0 0 0-4.785c.507-.253.761-.362 1.305-.688a9.84 9.84 0 0 0 5.184 1.812c3.95-.435 5.288-5.075 6.702-7.504a2.14 2.14 0 0 0-.181-2.465c-5.546-6.488-5.184-3.226-5.329-6.452 1.16-.834 4.06-2.32 4.785-4.133 1.414-3.625-1.957-6.775-3.407-9.204a1.7 1.7 0 0 0-1.813-.797q-2.026.45-3.987 1.124c-4.17 1.413-1.45 1.45-4.785.181-.508-3.009.326-6.887-4.133-7.576a34 34 0 0 0-6.235.362 1.27 1.27 0 0 0-1.16.87 34 34 0 0 0-1.196 6.127 9.8 9.8 0 0 0-2.244 1.05c-4.314-2.863-5.909-4.82-9.679 1.487-.399.689-2.03 3.843-2.139 4.241-.833 2.936 3.626 4.821 5.148 5.728a25 25 0 0 0 0 2.755c-5.184 2.61-7.866 3.226-3.879 9.823m6.344-7.25a1.7 1.7 0 0 0 .87-1.74c-.87-5.654 1.776-4.422-3.117-7.032-.472-.254-2.103-.942-2.466-1.595a22.5 22.5 0 0 1 3.625-6.195c1.74.435 4.423 3.625 5.837 2.537 1.957-1.486 3.842-1.413 3.879-2.718-.033-1.9.273-3.79.906-5.583 7.721-.616 6.162-.326 6.706 6.126a1.56 1.56 0 0 0 1.015 1.305c6.126 3.19 1.921 1.595 10.15-.29.725 1.088 2.791 3.625 2.284 5.003-6.126 4.096-5.293 2.537-5.293 8.192 0 1.885 1.197 1.197 5.075 5.51-.435.907-1.812 3.88-2.827 3.988-7.25-3.625-3.625-2.139-8.954-.363-2.538.834-1.087 4.06-1.196 6.92a8.7 8.7 0 0 1-3.372.508 9.8 9.8 0 0 1-2.718 0v-5.111a2.066 2.066 0 0 0-1.486-2.03c-3.626-1.015-4.097-2.755-5.8-1.631-4.93 3.19-3.988 2.9-4.713 1.92a18.1 18.1 0 0 1-2.9-5.002 32.6 32.6 0 0 1 4.495-2.791z" fill="#e3ffd9"/>
-        </g>
-        <defs>
-          <clipPath id="a_sec1">
-            <path fill="#fff" d="M0 0h87v87H0z"/>
-          </clipPath>
-        </defs>
-      </svg>
-    )
+    icon: <ShieldIcon1 />
   },
   {
     id: 2,
@@ -31,14 +42,7 @@ const securitySlides = [
     description: "Данные хранятся в облаке Ничего не потеряется если сломается телефон или уволится администратор.",
     subDescription: "",
     footerText: "Вся история всегда с вами.",
-    icon: (
-       <svg width="87" height="87" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-        <path d="M12 18h.01" />
-        <path d="M17 12s1.5 0 1.5-1.5V9a3 3 0 0 0-6 0v1.5c0 1.5 1.5 1.5 1.5 1.5" stroke="#e3ffd9" />
-        <path d="M12 9v2" stroke="#e3ffd9" />
-      </svg>
-    )
+    icon: <CloudIcon />
   },
   {
     id: 3,
@@ -46,14 +50,7 @@ const securitySlides = [
     description: "Линейный сотрудник видит только то, что нужно для работы — кнопки в боте.",
     subDescription: "",
     footerText: "Финансовая картина закрыта.",
-    icon: (
-      <svg width="87" height="87" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <rect x="15" y="2" width="7" height="9" rx="1" stroke="#e3ffd9" />
-        <path d="M18.5 5.5v2" stroke="#e3ffd9" />
-      </svg>
-    )
+    icon: <ShieldIcon1 />
   },
   {
     id: 4,
@@ -61,13 +58,7 @@ const securitySlides = [
     description: "Ваши данные не передаются третьим лицам Никакой рекламы, никаких партнёров.",
     subDescription: "",
     footerText: "Только вы и ваши цифры.",
-    icon: (
-      <svg width="87" height="87" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <circle cx="12" cy="12" r="3" stroke="#e3ffd9" />
-        <path d="M12 9v6M9 12h6" stroke="#e3ffd9" />
-      </svg>
-    )
+    icon: <ShieldIcon1 />
   },
   {
     id: 5,
@@ -75,12 +66,7 @@ const securitySlides = [
     description: "Защищённое соединение Все данные передаются по зашифрованным протоколам.",
     subDescription: "Резервные копии создаются автоматически.",
     footerText: "Сервис работает на enterprise-инфраструктуре с высоким уровнем надёжности.",
-    icon: (
-      <svg width="87" height="87" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <path d="m9 12 2 2 4-4" stroke="#e3ffd9" />
-      </svg>
-    )
+    icon: <ShieldIcon1 />
   }
 ]
 
@@ -94,24 +80,24 @@ export default function Security() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-[#8547FF] rounded-[48px] p-8 md:p-16 relative shadow-2xl overflow-hidden min-h-[700px] flex flex-col"
+          className="bg-[#8547FF] rounded-[48px] p-8 md:p-16 relative shadow-2xl overflow-hidden min-h-[600px] flex flex-col"
         >
           {/* Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-white text-[32px] md:text-[56px] leading-[1.1] font-comfortaa font-bold mb-4">
-              Мы гарантируем<br />
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-white text-[32px] md:text-[56px] leading-[1.1] mb-4">
+              <span className="font-comfortaa font-bold block mb-2 md:mb-0 md:inline">Мы гарантируем</span><br className="hidden md:block" />
               <span className="font-days-one font-normal">безопасность финансов</span>
             </h2>
           </div>
 
           {/* Slider Controls */}
-          <div className="relative mb-16 max-w-2xl mx-auto w-full">
+          <div className="relative mb-12 md:mb-20 max-w-[480px] mx-auto w-full">
              <div className="flex bg-white rounded-2xl overflow-hidden shadow-lg p-1 relative">
                 {securitySlides.map((slide, index) => (
                     <button
                         key={slide.id}
                         onClick={() => setActiveSlide(index)}
-                        className={`flex-1 py-4 text-2xl md:text-3xl font-bold transition-all duration-300 relative z-10 ${
+                        className={`flex-1 py-3 md:py-4 text-xl md:text-3xl font-bold transition-all duration-300 relative z-10 ${
                             activeSlide === index ? 'text-white' : 'text-[#141414]'
                         }`}
                     >
@@ -131,43 +117,46 @@ export default function Security() {
             </div>
           </div>
 
-          {/* Content Area */}
+          {/* Content Area - Narrower internal container for desktop */}
           <div className="relative flex-grow flex items-center justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeSlide}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 lg:grid-cols-[120px_1fr] gap-8 md:gap-12 items-start w-full max-w-4xl"
-              >
-                {/* Icon Column */}
-                <div className="flex justify-center lg:justify-start">
-                  <div className="w-20 h-20 md:w-[87px] md:h-[87px]">
-                    {securitySlides[activeSlide].icon}
-                  </div>
-                </div>
+            <div className="w-full max-w-[760px] mx-auto">
+                <AnimatePresence mode="wait">
+                <motion.div
+                    key={activeSlide}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex flex-col lg:flex-row gap-8 md:gap-16 items-center lg:items-start text-center lg:text-left"
+                >
+                    {/* Icon Column */}
+                    <div className="shrink-0 w-24 h-24 md:w-[140px] md:h-[140px] lg:w-[180px] lg:h-[180px] flex items-center justify-center">
+                        {securitySlides[activeSlide].icon}
+                    </div>
 
-                {/* Text Column */}
-                <div className="text-white">
-                  <h3 className="text-2xl md:text-[40px] font-bold mb-6 leading-tight">
-                    {securitySlides[activeSlide].title}
-                  </h3>
-                  
-                  <div className="space-y-6 text-lg md:text-2xl opacity-90 leading-snug">
-                    <p>{securitySlides[activeSlide].description}</p>
-                    {securitySlides[activeSlide].subDescription && (
-                      <p>{securitySlides[activeSlide].subDescription}</p>
-                    )}
-                  </div>
+                    {/* Text Column */}
+                    <div className="text-white flex flex-col">
+                        <h3 className="text-2xl md:text-[44px] font-bold mb-6 leading-tight">
+                            {securitySlides[activeSlide].title}
+                        </h3>
 
-                  <div className="mt-12 text-lg md:text-2xl font-comfortaa font-medium pt-8 border-t border-white/20 inline-block">
-                    {securitySlides[activeSlide].footerText}
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                        <div className="space-y-4 md:space-y-6 text-lg md:text-[22px] opacity-90 leading-snug">
+                            <p>{securitySlides[activeSlide].description}</p>
+                            {securitySlides[activeSlide].subDescription && (
+                            <p>{securitySlides[activeSlide].subDescription}</p>
+                            )}
+                        </div>
+
+                        {/* Thin line separator */}
+                        <div className="h-px w-full max-w-[300px] lg:max-w-md bg-white/20 my-8 self-center lg:self-start" />
+
+                        <div className="text-lg md:text-[22px] font-comfortaa font-medium opacity-100">
+                            {securitySlides[activeSlide].footerText}
+                        </div>
+                    </div>
+                </motion.div>
+                </AnimatePresence>
+            </div>
           </div>
         </motion.div>
       </div>
