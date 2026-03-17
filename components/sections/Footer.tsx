@@ -67,7 +67,7 @@ export default function Footer({ onCta }: FooterProps) {
           <p>© {new Date().getFullYear()} Сколько Денег. Все права защищены.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
-            <a href="#" className="hover:text-white transition-colors">Оферта</a>
+            <a href="/oferta" className="hover:text-white transition-colors">Оферта</a>
           </div>
         </div>
 
