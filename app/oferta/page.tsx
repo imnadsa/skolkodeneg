@@ -22,7 +22,7 @@ export default function OfertaPage() {
           <p>ИНН: 772799039046 &nbsp;|&nbsp; ОГРНИП: 319774600768729</p>
           <p>Р/с: 40802810220000811295 &nbsp;|&nbsp; Банк: ООО «Банк Точка»</p>
           <p>БИК: 044525104 &nbsp;|&nbsp; К/с: 30101810745374525104</p>
-          <p>E-mail: <a href="mailto:support@skolkodeneg.ru" className="text-[#FF0084] hover:underline">support@skolkodeneg.ru</a></p>
+          <p>E-mail: <a href="mailto:antoshkin.info@bk.ru" className="text-[#FF0084] hover:underline">antoshkin.info@bk.ru</a></p>
         </div>
 
         {/* Вводная часть */}
